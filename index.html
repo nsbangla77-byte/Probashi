@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BANGLADESH PROBASHI MONCHO FOUNDATION</title>
+    <title>Probashi Moncho Foundation - Admin Panel</title>
     
-    <!-- আইকন এবং আধুনিক ডিজাইন লাইব্রেরি -->
+    <!-- আইকন এবং আধুনিক ডিজাইন -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -26,64 +26,69 @@
     <!-- Header -->
     <div class="hero-section">
         <div class="w-24 h-24 bg-white rounded-full mx-auto mb-5 flex items-center justify-center text-blue-800 text-5xl shadow-2xl border-4 border-blue-300/30">
-            <i class="fas fa-users-rectangle"></i>
+            <i class="fas fa-hand-holding-heart"></i>
         </div>
         <h1 class="text-xl font-black uppercase leading-tight px-4">বাংলাদেশ প্রবাসী মঞ্চ ফাউন্ডেশন</h1>
         <p class="text-blue-100 text-[10px] mt-4 font-bold uppercase tracking-[2px] opacity-90 px-6 italic">মালয়েশিয়া ও বিশ্বব্যাপী প্রবাসীদের ঐক্য, সেবা ও উন্নয়ন</p>
     </div>
 
-    <!-- Features List -->
+    <!-- লিঙ্ক লিস্ট প্রদর্শন -->
     <div id="feature-list" class="pt-6 pb-32">
-        <!-- এখানে আপনার সব ফিচার বাটন আসবে -->
+        <!-- এখানে আপনার সব বাটন আসবে -->
     </div>
 
-    <!-- Hidden Admin Trigger -->
+    <!-- লুকানো অ্যাডমিন বাটন -->
     <div class="text-center py-10">
-        <button onclick="showLogin()" class="text-gray-200 text-[8px] tracking-[5px] uppercase font-black hover:text-blue-700 transition">🔒 Admin Security Link</button>
+        <button onclick="showLogin()" class="text-gray-300 text-[8px] tracking-[5px] uppercase font-black">🔒 ADMIN ACCESS</button>
     </div>
 </div>
 
-<!-- Login Modal -->
+<!-- লগইন বক্স -->
 <div id="login-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-[200] p-6">
-    <div class="bg-white p-10 rounded-[40px] w-full max-w-xs text-center shadow-2xl border border-gray-100">
-        <div class="text-blue-700 text-4xl mb-4"><i class="fas fa-user-lock"></i></div>
-        <h3 class="font-black text-gray-800 mb-8 text-xl">অ্যাডমিন এক্সেস</h3>
+    <div class="bg-white p-10 rounded-[40px] w-full max-w-xs text-center shadow-2xl">
+        <h3 class="font-black text-gray-800 mb-8 text-xl border-b pb-2">অ্যাডমিন লগইন</h3>
         <input type="text" id="username" placeholder="ইউজার নেম" class="uppercase font-bold">
         <input type="password" id="password" placeholder="পাসওয়ার্ড" class="font-bold">
-        <button onclick="doLogin()" class="w-full bg-blue-700 text-white p-4 rounded-2xl font-black shadow-xl hover:bg-blue-800 active:scale-95 transition mt-2 uppercase tracking-widest text-sm">লগইন</button>
-        <button onclick="closeLogin()" class="mt-6 text-gray-400 text-xs font-bold hover:text-red-500">বন্ধ করুন</button>
+        <button onclick="doLogin()" class="w-full bg-blue-700 text-white p-4 rounded-2xl font-black shadow-xl hover:bg-blue-800 transition uppercase tracking-widest text-sm">লগইন করুন</button>
+        <button onclick="closeLogin()" class="mt-6 text-gray-400 text-xs font-bold">বন্ধ করুন</button>
     </div>
 </div>
 
-<!-- Super Admin Control Panel -->
+<!-- অ্যাডমিন কন্ট্রোল প্যানেল -->
 <div id="control-panel" class="admin-panel">
     <h3 class="font-black text-blue-900 mb-6 text-center text-lg uppercase tracking-wider border-b pb-4">
-        <i class="fas fa-edit mr-2 text-blue-600"></i> নতুন ফিচার তৈরি করুন
+        <i class="fas fa-edit mr-2 text-blue-600"></i> নতুন ফিচার যোগ করুন
     </h3>
     
-    <label class="text-[10px] font-bold text-gray-400 uppercase ml-1">ফিচারের নাম:</label>
-    <input type="text" id="feat-name" placeholder="যেমন: আমাদের ফেসবুক">
+    <label class="text-[10px] font-bold text-gray-400 uppercase">ফিচারের নাম:</label>
+    <input type="text" id="feat-name" placeholder="যেমন: আমাদের ফেসবুক পেজ">
     
-    <label class="text-[10px] font-bold text-gray-400 uppercase ml-1">ফিচারের লিঙ্ক:</label>
-    <input type="text" id="feat-url" placeholder="যেমন: facebook.com/yourpage">
+    <label class="text-[10px] font-bold text-gray-400 uppercase">লিঙ্ক (URL):</label>
+    <input type="text" id="feat-url" placeholder="যেমন: facebook.com/yourgroup">
     
-    <label class="text-[10px] font-bold text-gray-400 uppercase ml-1">আইকন কোড (FontAwesome):</label>
-    <input type="text" id="feat-icon" placeholder="যেমন: fab fa-facebook (খালি রাখলে ডিফল্ট হবে)">
-    
-    <p class="text-[9px] text-blue-500 mb-4 px-1 italic">* আইকন গাইড: fab fa-facebook, fab fa-youtube, fas fa-phone, fas fa-globe, fas fa-envelope</p>
+    <label class="text-[10px] font-bold text-gray-400 uppercase">আইকন নির্বাচন করুন:</label>
+    <select id="feat-icon" class="w-full border-2 border-f1f5f9 p-3 rounded-xl mb-6 bg-f8fafc outline-none">
+        <option value="fab fa-facebook">ফেসবুক (Facebook)</option>
+        <option value="fab fa-youtube">ইউটিউব (YouTube)</option>
+        <option value="fab fa-whatsapp">হোয়াটসঅ্যাপ (WhatsApp)</option>
+        <option value="fab fa-telegram">টেলিগ্রাম (Telegram)</option>
+        <option value="fas fa-phone-alt">ফোন/হেল্পলাইন (Phone)</option>
+        <option value="fas fa-globe">ওয়েবসাইট (Website)</option>
+        <option value="fas fa-envelope">ইমেইল (Email)</option>
+        <option value="fas fa-map-marker-alt">ঠিকানা (Location)</option>
+    </select>
 
     <div class="flex gap-2">
-        <button onclick="addNewItem()" class="flex-1 bg-blue-600 text-white p-4 rounded-2xl font-black shadow-xl hover:bg-blue-700 transition uppercase text-xs">ফিচার যোগ করুন</button>
+        <button onclick="addNewItem()" class="flex-1 bg-green-600 text-white p-4 rounded-2xl font-black shadow-xl hover:bg-green-700 transition uppercase text-xs">সেভ করুন</button>
         <button onclick="logout()" class="bg-gray-100 text-gray-500 px-4 rounded-2xl font-black hover:bg-red-500 hover:text-white transition uppercase text-[10px]">লগআউট</button>
     </div>
 </div>
 
 <script>
-    // ডাটাবেজ কানেকশন (লোকাল)
-    let masterData = JSON.parse(localStorage.getItem('moncho_master_db')) || {
+    // ডাটাবেজ
+    let masterData = JSON.parse(localStorage.getItem('moncho_final_db')) || {
         links: [
-            { name: "ফাউন্ডেশন ফেসবুক পেজ", url: "https://facebook.com", icon: "fab fa-facebook" },
-            { name: "অফিসিয়াল ইউটিউব", url: "https://youtube.com", icon: "fab fa-youtube" }
+            { name: "প্রবাসী মঞ্চ ফাউন্ডেশন ওয়েবসাইট", url: "https://nsbangla.com", icon: "fas fa-globe" }
         ]
     };
 
@@ -95,33 +100,60 @@
             container.innerHTML += `
                 <div class="relative px-3">
                     <a href="${item.url}" target="_blank" class="link-item">
-                        <i class="${item.icon || 'fas fa-link'} mr-5 text-blue-700 text-2xl w-8 text-center"></i>
+                        <i class="${item.icon} mr-5 text-blue-700 text-2xl w-8 text-center"></i>
                         <span class="text-[15px]">${item.name}</span>
                     </a>
                     <button onclick="removeItem(${index})" class="admin-tool hidden absolute right-10 top-7 text-red-400 hover:text-red-600 transition p-2">
-                        <i class="fas fa-trash-can"></i>
+                        <i class="fas fa-trash-alt text-xl"></i>
                     </button>
                 </div>
             `;
         });
 
-        // অ্যাডমিন মোড চেক
-        if(sessionStorage.getItem('master_auth') === 'AUTHORIZED_RAFIK_1987') {
+        if(sessionStorage.getItem('auth_done') === 'yes') {
             document.getElementById('control-panel').style.display = "block";
             document.querySelectorAll('.admin-tool').forEach(b => b.classList.remove('hidden'));
         }
     }
 
-    // লগইন সিস্টেম
     function showLogin() { document.getElementById('login-modal').classList.remove('hidden'); }
     function closeLogin() { document.getElementById('login-modal').classList.add('hidden'); }
 
     function doLogin() {
         const u = document.getElementById('username').value;
         const p = document.getElementById('password').value;
-        
         if(u === "MDRAFIK159123" && p === "159123") {
-            sessionStorage.setItem('master_auth', 'AUTHORIZED_RAFIK_1987');
+            sessionStorage.setItem('auth_done', 'yes');
             location.reload();
-        } else {
-            alert("ভুল তথ্য! সঠিক ইউজার নেম ও পাসওয়ার্ড দিন।");
+        } else { alert("ভুল তথ্য! সঠিক ইউজার নেম ও পাসওয়ার্ড দিন।"); }
+    }
+
+    function addNewItem() {
+        const name = document.getElementById('feat-name').value;
+        let url = document.getElementById('feat-url').value;
+        const icon = document.getElementById('feat-icon').value;
+        
+        if(name && url) {
+            if(!url.startsWith('http')) url = 'https://' + url;
+            masterData.links.push({ name: name, url: url, icon: icon });
+            localStorage.setItem('moncho_final_db', JSON.stringify(masterData));
+            alert("সফলভাবে যোগ হয়েছে!");
+            location.reload();
+        } else { alert("নাম এবং লিঙ্ক দিন!"); }
+    }
+
+    function removeItem(i) {
+        if(confirm("এটি ডিলিট করতে চান?")) {
+            masterData.links.splice(i, 1);
+            localStorage.setItem('moncho_final_db', JSON.stringify(masterData));
+            renderApp();
+        }
+    }
+
+    function logout() { sessionStorage.clear(); location.reload(); }
+
+    renderApp();
+</script>
+
+</body>
+</html>
