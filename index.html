@@ -1,149 +1,129 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Probashi Moncho Foundation - Official</title>
-    
-    <!-- প্রফেশনাল লাইব্রেরি -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <style>
-        body { background-color: #f8fafc; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        .main-app { max-width: 500px; margin: auto; background: white; min-height: 100vh; position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.1); }
-        .hero { background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%); padding: 50px 20px; text-align: center; color: white; border-bottom-left-radius: 60px; border-bottom-right-radius: 60px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .link-card { transition: 0.3s; display: flex; align-items: center; background: #fff; border: 1px solid #e2e8f0; padding: 18px; margin: 15px; border-radius: 20px; text-decoration: none; color: #1e293b; font-weight: 700; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
-        .link-card:hover { border-color: #3b82f6; transform: translateY(-3px); box-shadow: 0 10px 15px rgba(59, 130, 246, 0.1); }
-        .admin-sheet { display: none; position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 30px; border-top: 6px solid #1e3a8a; border-radius: 40px 40px 0 0; z-index: 100; max-width: 500px; margin: auto; box-shadow: 0 -10px 30px rgba(0,0,0,0.2); max-height: 85vh; overflow-y: auto; }
-        input, select { border: 2px solid #f1f5f9; padding: 14px; border-radius: 15px; width: 100%; margin-bottom: 12px; outline: none; background: #f8fafc; }
-    </style>
-</head>
-<body>
+const express = require("express");
+const session = require("express-session");
+const rateLimit = require("express-rate-limit");
+const helmet = require("helmet");
+const bcrypt = require("bcryptjs");
+const Database = require("better-sqlite3");
+const path = require("path");
 
-<div class="main-app">
-    <!-- Header Section -->
-    <div class="hero">
-        <div class="w-24 h-24 bg-white rounded-full mx-auto mb-5 flex items-center justify-center text-blue-800 text-5xl shadow-2xl border-4 border-blue-400/30">
-            <i class="fas fa-globe-asia"></i>
-        </div>
-        <h1 class="text-xl font-black uppercase leading-tight px-4">বাংলাদেশ প্রবাসী মঞ্চ ফাউন্ডেশন</h1>
-        <p class="text-blue-100 text-[10px] mt-4 font-bold uppercase tracking-[2px] opacity-90 px-6 italic">মালয়েশিয়া ও বিশ্বব্যাপী প্রবাসীদের ঐক্য, সেবা ও উন্নয়ন</p>
-    </div>
+const app = express();
+const db = new Database("data.db");
+const PORT = process.env.PORT || 3000;
 
-    <!-- লিঙ্ক লিস্ট প্রদর্শন -->
-    <div id="feature-list" class="pt-6 pb-32">
-        <!-- বাটনগুলো এখানে অটোমেটিক আসবে -->
-    </div>
+db.exec(`
+CREATE TABLE IF NOT EXISTS admins (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT UNIQUE NOT NULL,
+  password_hash TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS links (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  url TEXT NOT NULL,
+  icon TEXT NOT NULL DEFAULT 'globe',
+  created_at TEXT DEFAULT CURRENT_TIMESTAMP
+);
+`);
 
-    <!-- গোপন অ্যাডমিন বাটন -->
-    <div class="text-center py-10">
-        <button onclick="document.getElementById('login-modal').classList.remove('hidden')" class="text-gray-300 text-[8px] font-black tracking-[5px] uppercase">🔒 Secure Login</button>
-    </div>
-</div>
+const adminUser = process.env.ADMIN_USERNAME || "admin";
+const adminPass = process.env.ADMIN_PASSWORD;
+if (!adminPass) {
+  console.error("Set ADMIN_PASSWORD as a Replit Secret before running.");
+  process.exit(1);
+}
 
-<!-- লগইন বক্স -->
-<div id="login-modal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center z-[200] p-6">
-    <div class="bg-white p-10 rounded-[40px] w-full max-w-xs text-center shadow-2xl">
-        <h3 class="font-black text-gray-800 mb-8 text-xl border-b pb-2">অ্যাডমিন লগইন</h3>
-        <input type="text" id="u-name" placeholder="ইউজার নেম" class="uppercase font-bold">
-        <input type="password" id="u-pass" placeholder="পাসওয়ার্ড" class="font-bold">
-        <button onclick="handleLogin()" class="w-full bg-blue-700 text-white p-4 rounded-2xl font-black shadow-xl hover:bg-blue-800 transition uppercase tracking-widest text-sm">লগইন</button>
-        <button onclick="document.getElementById('login-modal').classList.add('hidden')" class="mt-6 text-gray-400 text-xs">বন্ধ করুন</button>
-    </div>
-</div>
+const existing = db.prepare("SELECT id FROM admins WHERE username=?").get(adminUser);
+if (!existing) {
+  const hash = bcrypt.hashSync(adminPass, 12);
+  db.prepare("INSERT INTO admins(username,password_hash) VALUES(?,?)").run(adminUser, hash);
+}
+if (db.prepare("SELECT COUNT(*) c FROM links").get().c === 0) {
+  db.prepare("INSERT INTO links(name,url,icon) VALUES(?,?,?)")
+    .run("প্রবাসী ও যুব কল্যাণ সমবায় সমিতি", "https://example.com", "globe");
+}
 
-<!-- অ্যাডমিন প্যানেল -->
-<div id="admin-panel" class="admin-sheet">
-    <h3 class="font-black text-blue-900 mb-6 text-center text-lg uppercase tracking-wider border-b pb-4">অ্যাডমিন সেটিংস</h3>
-    
-    <label class="text-[10px] font-bold text-gray-400 uppercase ml-1">ফিচারের নাম:</label>
-    <input type="text" id="feat-name" placeholder="যেমন: আমাদের ফেসবুক">
-    
-    <label class="text-[10px] font-bold text-gray-400 uppercase ml-1">ফিচারের লিঙ্ক:</label>
-    <input type="text" id="feat-url" placeholder="যেমন: facebook.com/yourpage">
-    
-    <label class="text-[10px] font-bold text-gray-400 uppercase ml-1">আইকন নির্বাচন করুন:</label>
-    <select id="feat-icon">
-        <option value="fab fa-facebook">ফেসবুক আইকন</option>
-        <option value="fab fa-youtube">ইউটিউব আইকন</option>
-        <option value="fab fa-whatsapp">হোয়াটসঅ্যাপ আইকন</option>
-        <option value="fas fa-phone-alt">ফোন/হেল্পলাইন</option>
-        <option value="fas fa-globe">ওয়েবসাইট আইকন</option>
-        <option value="fas fa-envelope">ইমেইল আইকন</option>
-    </select>
-
-    <div class="flex gap-2">
-        <button onclick="addNewLink()" class="flex-1 bg-green-600 text-white p-4 rounded-2xl font-black shadow-lg hover:bg-green-700 transition uppercase text-xs">সেভ করুন</button>
-        <button onclick="sessionStorage.clear(); location.reload();" class="bg-gray-100 text-gray-500 px-4 rounded-2xl font-black hover:bg-red-500 hover:text-white transition uppercase text-[10px]">লগআউট</button>
-    </div>
-</div>
-
-<script>
-    // ডাটাবেজ
-    let foundationData = JSON.parse(localStorage.getItem('moncho_db_final')) || {
-        links: [
-            { name: "প্রবাসী মঞ্চ ফাউন্ডেশন ওয়েবসাইট", url: "https://nsbangla.com", icon: "fas fa-globe" }
-        ]
-    };
-
-    function render() {
-        const container = document.getElementById('feature-list');
-        container.innerHTML = "";
-        
-        foundationData.links.forEach((item, index) => {
-            container.innerHTML += `
-                <div class="relative px-3">
-                    <a href="${item.url}" target="_blank" class="link-card">
-                        <i class="${item.icon} mr-5 text-blue-700 text-2xl w-8 text-center"></i>
-                        <span class="text-[15px]">${item.name}</span>
-                    </a>
-                    <button onclick="removeLink(${index})" class="adm-only hidden absolute right-10 top-7 text-red-400 hover:text-red-600 p-2">
-                        <i class="fas fa-trash-alt text-xl"></i>
-                    </button>
-                </div>
-            `;
-        });
-
-        if(sessionStorage.getItem('moncho_auth') === 'true') {
-            document.getElementById('admin-panel').style.display = "block";
-            document.querySelectorAll('.adm-only').forEach(b => b.classList.remove('hidden'));
-        }
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "https://cdn.tailwindcss.com"],
+      scriptSrc: ["'self'", "https://cdn.tailwindcss.com"],
+      imgSrc: ["'self'", "data:"],
+      connectSrc: ["'self'"],
+      fontSrc: ["'self'"],
+      objectSrc: ["'none'"],
+      baseUri: ["'self'"],
+      frameAncestors: ["'none'"]
     }
+  }
+}));
+app.use(express.json({ limit: "20kb" }));
+app.use(express.urlencoded({ extended: false, limit: "20kb" }));
+app.use(session({
+  secret: process.env.SESSION_SECRET || "CHANGE_THIS_SECRET_IN_REPLIT",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    sameSite: "strict",
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 30 * 60 * 1000
+  }
+}));
+app.use(express.static(path.join(__dirname, "public")));
 
-    function handleLogin() {
-        const u = document.getElementById('u-name').value;
-        const p = document.getElementById('u-pass').value;
-        if(u === "MDRAFIK159123" && p === "159123") {
-            sessionStorage.setItem('moncho_auth', 'true');
-            alert("সফলভাবে লগইন হয়েছে!");
-            location.reload();
-        } else { alert("ভুল তথ্য!"); }
-    }
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 8,
+  standardHeaders: true,
+  legacyHeaders: false
+});
 
-    function addNewLink() {
-        const n = document.getElementById('feat-name').value;
-        let u = document.getElementById('feat-url').value;
-        const i = document.getElementById('feat-icon').value;
-        
-        if(n && u) {
-            if(!u.startsWith('http')) u = 'https://' + u;
-            foundationData.links.push({ name: n, url: u, icon: i });
-            localStorage.setItem('moncho_db_final', JSON.stringify(foundationData));
-            alert("সেভ হয়েছে!");
-            location.reload();
-        } else { alert("নাম এবং লিঙ্ক দিন!"); }
-    }
+function adminOnly(req, res, next) {
+  if (req.session.adminId) return next();
+  res.status(401).json({ error: "অনুমতি নেই" });
+}
 
-    function removeLink(index) {
-        if(confirm("ডিলিট করতে চান?")) {
-            foundationData.links.splice(index, 1);
-            localStorage.setItem('moncho_db_final', JSON.stringify(foundationData));
-            render();
-        }
-    }
+function validUrl(value) {
+  try {
+    const u = new URL(value);
+    return ["http:", "https:"].includes(u.protocol);
+  } catch { return false; }
+}
 
-    render();
-</script>
-</body>
-</html>
+app.post("/api/login", loginLimiter, (req, res) => {
+  const { username, password } = req.body;
+  const admin = db.prepare("SELECT * FROM admins WHERE username=?").get(username || "");
+  if (!admin || !bcrypt.compareSync(password || "", admin.password_hash)) {
+    return res.status(401).json({ error: "ভুল লগইন তথ্য" });
+  }
+  req.session.adminId = admin.id;
+  res.json({ ok: true });
+});
+
+app.post("/api/logout", (req, res) => {
+  req.session.destroy(() => res.json({ ok: true }));
+});
+
+app.get("/api/links", (req, res) => {
+  res.json(db.prepare("SELECT id,name,url,icon FROM links ORDER BY id DESC").all());
+});
+
+app.post("/api/links", adminOnly, (req, res) => {
+  const { name, url, icon } = req.body;
+  if (!name || name.length > 120 || !validUrl(url)) {
+    return res.status(400).json({ error: "নাম বা লিংক সঠিক নয়" });
+  }
+  const result = db.prepare("INSERT INTO links(name,url,icon) VALUES(?,?,?)")
+    .run(name.trim(), url.trim(), (icon || "globe").slice(0, 30));
+  res.json({ id: result.lastInsertRowid });
+});
+
+app.delete("/api/links/:id", adminOnly, (req, res) => {
+  db.prepare("DELETE FROM links WHERE id=?").run(Number(req.params.id));
+  res.json({ ok: true });
+});
+
+app.get("/api/me", (req, res) => res.json({ admin: !!req.session.adminId }));
+
+app.listen(PORT, () => console.log(`Running on port ${PORT}`));
