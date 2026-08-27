@@ -1,70 +1,177 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>বাংলাদেশ প্রবাসী মঞ্চ ফাউন্ডেশন</title>
-    
-    <!-- আইকন ঠিক করার জন্য FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        body { font-family: Arial, sans-serif; margin: 0; background-color: #f0f2f5; }
-        .header { background: #006a4e; color: white; text-align: center; padding: 30px; }
-        .logo { font-size: 50px; margin-bottom: 10px; }
-        .container { padding: 20px; max-width: 500px; margin: auto; }
-        .card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
-        .btn { display: block; padding: 15px; margin: 10px 0; border-radius: 8px; text-decoration: none; font-weight: bold; color: white; transition: 0.3s; }
-        
-        /* বাটনের রঙ */
-        .btn-member { background: #006a4e; } /* সবুজ */
-        .btn-fb { background: #1877F2; }     /* ফেসবুক নীল */
-        .btn-wa { background: #25D366; }     /* হোয়াটসঅ্যাপ সবুজ */
-        .btn-yt { background: #FF0000; }     /* ইউটিউব লাল */
-        
-        .icon { margin-right: 10px; }
-    </style>
-</head>
-<body>
+Update this existing Vite + React + TypeScript project into a Bangladeshi expatriate community member portal.
 
-<div class="header">
-    <div class="logo"><i class="fas fa-hand-holding-heart"></i></div>
-    <h2>বাংলাদেশ প্রবাসী মঞ্চ ফাউন্ডেশন</h2>
-    <p>ঐক্য, সেবা ও উন্নয়ন</p>
-</div>
+IMPORTANT:
+- Do not delete existing working features.
+- Keep the existing project structure.
+- Make the UI mobile-first and responsive.
+- Use attractive modern AI-style gradients, glass effects and subtle animations.
+- Use official brand logos/icons for Facebook, YouTube, TikTok, WhatsApp, Messenger and IMO, while respecting their brand guidelines.
+- Use Lucide icons for generic UI icons.
+- Use 3D-style cards/icons where appropriate, but keep text readable.
 
-<div class="container">
-    <div class="card">
-        <h3>সদস্য হিসেবে যুক্ত হোন</h3>
-        <a href="#" id="link-member" class="btn btn-member"><i class="fas fa-user-plus icon"></i>সদস্য ফরম পূরণ করুন</a>
-    </div>
+AUTHENTICATION FLOW:
 
-    <div class="card">
-        <h3>আমাদের সোশ্যাল মিডিয়া</h3>
-        <a href="#" id="link-fb" class="btn btn-fb"><i class="fab fa-facebook icon"></i>ফেসবুক পেজ</a>
-        <a href="#" id="link-wa" class="btn btn-wa"><i class="fab fa-whatsapp icon"></i>হোয়াটসঅ্যাপ গ্রুপ</a>
-        <a href="#" id="link-yt" class="btn btn-yt"><i class="fab fa-youtube icon"></i>ইউটিউব চ্যানেল</a>
-    </div>
-</div>
+1. Registration page must appear before entering the private member area.
+2. Registration fields:
+   - First Name
+   - Last Name
+   - Father's Name
+   - Mother's Name
+   - Mobile Number
+   - Village
+   - District
+   - Post Office
+   - Password
+   - Confirm Password
+3. Validate all required fields.
+4. Password and Confirm Password must match.
+5. Mobile number verification must use OTP verification.
+6. Do not mark a number as verified just because it was entered.
+7. Use Supabase Auth/OTP if Supabase is already configured.
+8. After successful verification, save member profile information in a profiles/members table.
+9. After registration and verification, redirect the user to the private member dashboard.
+10. Unauthenticated users must not be able to access the private dashboard.
+11. Add Logout.
+12. Add Login page for existing members.
 
-<script>
-    /* 
-       এখান থেকে আপনি খুব সহজে আপনার লিঙ্কগুলো পরিবর্তন করতে পারবেন।
-       নিচের কোটেশন মার্কের (" ") ভেতরে আপনার লিঙ্কগুলো বসিয়ে দিন।
-    */
-    const MY_CONFIG = {
-        member_form: "https://forms.gle/আপনার_ফরম_লিঙ্ক",
-        facebook: "https://facebook.com/আপনার_পেজ",
-        whatsapp: "https://wa.me/আপনার_নাম্বার",
-        youtube: "https://youtube.com/আপনার_চ্যানেল"
-    };
+MEMBER DASHBOARD:
 
-    // লিঙ্কগুলো অটোমেটিক আপডেট করার কোড
-    document.getElementById('link-member').href = MY_CONFIG.member_form;
-    document.getElementById('link-fb').href = MY_CONFIG.facebook;
-    document.getElementById('link-wa').href = MY_CONFIG.whatsapp;
-    document.getElementById('link-yt').href = MY_CONFIG.youtube;
-</script>
+Create an attractive dashboard with:
+- Member profile
+- Member name
+- Mobile number
+- Verified badge
+- Social/community links
+- APK/App download button
+- YouTube videos section
+- Community groups section
+- ESKL appointment link
+- Driver group
+- Worker group
+- WhatsApp contact buttons
 
-</body>
-</html>
+SOCIAL LINKS:
+
+Facebook Page:
+https://www.facebook.com/share/1DPBjB3ePJ/
+
+YouTube Channel:
+https://www.youtube.com/@Bangladeshprobashifundclubf
+
+WhatsApp Group:
+https://chat.whatsapp.com/D09urIUt fkdEjiVtqgIbY7?s=cl&p=a&ilr=4
+
+Messenger Group:
+https://m.me/j/AbazuYGAWNXaKYj3/?send_source=gc%3Acopy_invite_link
+
+IMO Group:
+https://s.imoim.net/nLU12X
+
+WhatsApp Contact:
+https://wa.me/qr/5SBSJ55KMO7CB1
+
+WhatsApp Contact 2:
+https://wa.me/message/6ZU4EZJFBGAFM1
+
+ESKL:
+https://www.expatservicesmy.com/ESKLPublicportal/Appointment/BookAppointment
+
+Driver Group:
+https://chat.whatsapp.com/HcEMStEP3un4uYDBBfH5b0?s=cl&p=a&ilr=4
+
+Worker Group:
+https://chat.whatsapp.com/Jl7W0RXQjEI7Mhgj5riBhu?s=qt&p=a&ilr=0
+
+YOUTUBE VIDEOS:
+
+Add a "Our YouTube Videos" section using these videos:
+
+https://youtu.be/DXB7gdJUlMw?si=IxsVw1rgzQEGmI-j
+
+https://youtu.be/I2mc2RXCEIA?si=f_NPlgC-n0RFVkyq
+
+https://youtu.be/KumLOhgtgsM?si=gdZm9oyZQiC2g-N0
+
+Display them as responsive video cards with thumbnails and play buttons. Prefer YouTube embed URLs where appropriate.
+
+APK:
+Add an "Download Member App" button/card.
+Make the APK URL configurable through a constant/env variable so it can be changed later without editing the UI.
+
+SOCIAL ICON CARDS:
+Create beautiful 3D-style cards for:
+Facebook
+YouTube
+WhatsApp
+Messenger
+IMO
+TikTok
+
+Each card should have:
+- Official recognizable logo
+- Label
+- Short description
+- Open button
+- Hover/tap animation
+- External link opening safely in a new tab
+
+TIKTOK:
+Add a TikTok profile/social card, but keep its URL configurable because no TikTok URL was provided yet.
+
+ANIMATION:
+Add subtle animations:
+- Page fade-in
+- Card hover/tap animation
+- Button press animation
+- Floating decorative elements
+- Dashboard section reveal animation
+Do not make animations excessive or slow on mobile devices.
+
+DESIGN:
+- Premium modern community portal
+- AI-inspired colorful gradient design
+- 3D cards/icons
+- Clean white/dark readable text areas
+- Bangladesh/Malaysia expatriate community feeling
+- Fully responsive Android mobile layout
+- Large touch-friendly buttons
+- Avoid overcrowding
+- Keep all text readable
+- Use accessible contrast
+- Add loading states
+- Add validation error messages
+- Add success messages
+
+DATABASE:
+If Supabase is configured, create/use a members/profiles table containing:
+id
+first_name
+last_name
+father_name
+mother_name
+mobile
+village
+district
+post_office
+created_at
+updated_at
+
+Use the authenticated user's ID as the profile primary/foreign key.
+Do NOT store plaintext passwords in the profile table.
+Use Supabase Auth for passwords.
+
+SECURITY:
+- Protect private routes.
+- Only the authenticated member can read/update their own profile.
+- Add appropriate Row Level Security policies.
+- Never expose service-role keys in frontend code.
+- Never put secret API keys in the repository.
+- Keep .env.local out of Git.
+- Use VITE_ variables only for public frontend configuration.
+
+Finally:
+- Check TypeScript errors.
+- Check build errors.
+- Make sure all routes work.
+- Make sure registration → OTP verification → login → dashboard works.
+- Make sure the app still builds successfully with npm run build.
