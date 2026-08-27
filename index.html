@@ -1,627 +1,347 @@
+<!-- GitHub Pages-এ এই ফাইলটি রাখা যাবে।
+     গুরুত্বপূর্ণ: এটি SECURE BACKEND ADMIN নয়।
+     GitHub Pages শুধু static hosting; আসল নিরাপদ Admin Login + Database-এর
+     জন্য server-side backend প্রয়োজন। তাই এখানে password কোডের ভিতরে রাখা হয়নি। -->
+
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>সংগঠনের হিসাব</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      color: #222;
-    }
-
-    .container {
-      width: 95%;
-      max-width: 1100px;
-      margin: 30px auto;
-    }
-
-    .card {
-      background: white;
-      padding: 22px;
-      margin-bottom: 20px;
-      border-radius: 14px;
-      box-shadow: 0 5px 20px rgba(0,0,0,.08);
-    }
-
-    h1, h2 {
-      margin-top: 0;
-    }
-
-    input,
-    select,
-    button {
-      width: 100%;
-      padding: 12px;
-      margin: 6px 0;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-      font-size: 15px;
-    }
-
-    button {
-      cursor: pointer;
-      border: none;
-      background: #0b7a43;
-      color: white;
-      font-weight: bold;
-    }
-
-    button:hover {
-      opacity: .9;
-    }
-
-    .logout {
-      background: #c62828;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-    }
-
-    .stat {
-      text-align: center;
-      padding: 20px;
-      border-radius: 12px;
-      background: #eef8f2;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 28px;
-      margin-top: 8px;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th,
-    td {
-      padding: 10px;
-      border-bottom: 1px solid #eee;
-      text-align: left;
-    }
-
-    .deposit {
-      color: green;
-      font-weight: bold;
-    }
-
-    .withdraw {
-      color: red;
-      font-weight: bold;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    @media(max-width: 700px) {
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      table {
-        font-size: 13px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Foundation Admin</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f6;color:#173b30}
+.login{min-height:100vh;display:grid;place-items:center;background:linear-gradient(135deg,#075b43,#0b8a63)}
+.box{width:min(400px,92%);background:#fff;padding:35px;border-radius:22px;box-shadow:0 20px 60px #0004}
+.logo{font-size:25px;font-weight:bold;color:#087f5b;margin-bottom:25px}
+input,textarea{width:100%;padding:13px;margin:8px 0 15px;border:1px solid #d6e3de;border-radius:10px;font:inherit}
+button{border:0;border-radius:10px;padding:12px 18px;font-weight:bold;cursor:pointer}
+.login-btn{width:100%;background:#087f5b;color:#fff}
+.error{color:#b42318;font-size:13px}
+.app{display:none}
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:240px;background:#102f27;color:white;padding:25px 15px}
+.sidebar h2{color:#67d1a7}
+.sidebar a{display:block;color:#d8e8e2;text-decoration:none;padding:13px;border-radius:9px;margin:5px 0}
+.sidebar a:hover,.sidebar a.active{background:#1d4d3f;color:white}
+.main{margin-left:240px}
+.top{height:70px;background:white;border-bottom:1px solid #ddd;display:flex;align-items:center;justify-content:space-between;padding:0 30px}
+.content{padding:30px}
+.page{display:none}.page.active{display:block}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.card,.panel{background:white;border:1px solid #e3ebe7;border-radius:16px;padding:22px}
+.card b{font-size:30px;display:block;color:#087f5b}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}
+.primary{background:#087f5b;color:white}
+.danger{background:#fff0ef;color:#b42318}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:13px;border-bottom:1px solid #eee}
+@media(max-width:800px){
+.sidebar{position:relative;width:100%;height:auto}.main{margin-left:0}
+.cards,.grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:500px){.cards,.grid{grid-template-columns:1fr}}
+</style>
 </head>
 
 <body>
 
-<div class="container">
+<!-- LOGIN -->
+<div class="login" id="login">
+<div class="box">
+<div class="logo">আলোক ফাউন্ডেশন</div>
+<h2>Secure Admin Login</h2>
 
-  <!-- Login -->
-  <div id="loginBox" class="card">
+<label>Username</label>
+<input id="username" autocomplete="username">
 
-    <h1>🔐 Admin Login</h1>
+<label>Password</label>
+<input id="password" type="password" autocomplete="current-password">
 
-    <input
-      id="username"
-      placeholder="Username"
-    >
+<button class="login-btn" onclick="login()">Login</button>
+<p id="error" class="error"></p>
 
-    <input
-      id="password"
-      type="password"
-      placeholder="Password"
-    >
-
-    <button onclick="login()">
-      Login
-    </button>
-
-    <p id="loginMessage"></p>
-
-  </div>
-
-
-  <!-- Dashboard -->
-  <div id="dashboard" class="hidden">
-
-    <div class="card">
-
-      <h1>
-        📊 সংগঠনের হিসাব ব্যবস্থাপনা
-      </h1>
-
-      <button
-        class="logout"
-        onclick="logout()"
-      >
-        Logout
-      </button>
-
-    </div>
-
-
-    <!-- Statistics -->
-
-    <div class="grid">
-
-      <div class="stat">
-        বর্তমান ব্যালেন্স
-        <strong id="balance">
-          ৳0
-        </strong>
-      </div>
-
-      <div class="stat">
-        মোট জমা
-        <strong id="totalDeposit">
-          ৳0
-        </strong>
-      </div>
-
-      <div class="stat">
-        মোট উত্তোলন
-        <strong id="totalWithdraw">
-          ৳0
-        </strong>
-      </div>
-
-    </div>
-
-
-    <!-- Add transaction -->
-
-    <div class="card">
-
-      <h2>
-        ➕ নতুন হিসাব যোগ করুন
-      </h2>
-
-      <select id="type">
-
-        <option value="deposit">
-          টাকা জমা
-        </option>
-
-        <option value="withdraw">
-          টাকা উত্তোলন
-        </option>
-
-      </select>
-
-      <input
-        id="member"
-        placeholder="সদস্য/ব্যক্তির নাম"
-      >
-
-      <input
-        id="amount"
-        type="number"
-        placeholder="টাকার পরিমাণ"
-      >
-
-      <input
-        id="note"
-        placeholder="বিবরণ"
-      >
-
-      <button onclick="addTransaction()">
-        হিসাব সংরক্ষণ করুন
-      </button>
-
-      <p id="message"></p>
-
-    </div>
-
-
-    <!-- Transactions -->
-
-    <div class="card">
-
-      <h2>
-        📜 লেনদেনের ইতিহাস
-      </h2>
-
-      <table>
-
-        <thead>
-
-          <tr>
-            <th>তারিখ</th>
-            <th>ধরন</th>
-            <th>নাম</th>
-            <th>পরিমাণ</th>
-            <th>বিবরণ</th>
-            <th>Action</th>
-          </tr>
-
-        </thead>
-
-        <tbody id="transactionList"></tbody>
-
-      </table>
-
-    </div>
-
-  </div>
-
+<small>
+নোট: GitHub Pages-এ এই Login-টি আসল নিরাপদ authentication নয়।
+Production security-এর জন্য backend authentication ব্যবহার করতে হবে।
+</small>
+</div>
 </div>
 
+<!-- DASHBOARD -->
+<div class="app" id="app">
+
+<aside class="sidebar">
+<h2>আলোক ফাউন্ডেশন</h2>
+
+<a href="#" onclick="showPage('dashboard')">📊 Dashboard</a>
+<a href="#" onclick="showPage('home')">🏠 Home Control</a>
+<a href="#" onclick="showPage('activities')">📋 কার্যক্রম</a>
+<a href="#" onclick="showPage('members')">👥 সদস্য</a>
+<a href="#" onclick="showPage('messages')">✉️ মেসেজ</a>
+<a href="#" onclick="showPage('settings')">⚙️ Settings</a>
+
+<button class="danger" onclick="logout()">Logout</button>
+</aside>
+
+<main class="main">
+
+<header class="top">
+<strong>Professional Admin Dashboard</strong>
+<span>Administrator</span>
+</header>
+
+<div class="content">
+
+<!-- DASHBOARD -->
+<section id="dashboard" class="page active">
+<h1>Dashboard</h1>
+
+<div class="cards">
+<div class="card"><span>মোট সদস্য</span><b>৫২৮</b></div>
+<div class="card"><span>কার্যক্রম</span><b>১২</b></div>
+<div class="card"><span>মেসেজ</span><b>৮৭</b></div>
+<div class="card"><span>সহযোগিতা</span><b>৳১.৮L</b></div>
+</div>
+
+<div class="grid">
+<div class="panel">
+<h3>সাম্প্রতিক কার্যক্রম</h3>
+<p>🍚 শীতবস্ত্র বিতরণ</p>
+<p>📚 শিক্ষা সহায়তা</p>
+<p>🩺 মেডিকেল ক্যাম্প</p>
+</div>
+
+<div class="panel">
+<h3>Website Status</h3>
+<p>🟢 Website Online</p>
+<p>🟢 Database Connected — backend যুক্ত হলে</p>
+</div>
+</div>
+</section>
+
+<!-- HOME -->
+<section id="home" class="page">
+<h1>Home Page Control</h1>
+
+<div class="panel">
+<label>Foundation Name</label>
+<input id="foundationName" value="আলোক ফাউন্ডেশন">
+
+<label>Hero Title</label>
+<input id="heroTitle" value="মানুষের পাশে, মানবতার জন্য">
+
+<label>Hero Description</label>
+<textarea id="heroDescription" rows="5">
+অসহায় মানুষের পাশে দাঁড়ানো, শিক্ষা ও মানবিক সহায়তার মাধ্যমে একটি সুন্দর সমাজ গড়াই আমাদের লক্ষ্য।
+</textarea>
+
+<button class="primary" onclick="saveHome()">Save Changes</button>
+</div>
+</section>
+
+<!-- ACTIVITIES -->
+<section id="activities" class="page">
+<h1>কার্যক্রম</h1>
+
+<div class="panel">
+<button class="primary" onclick="addActivity()">+ নতুন কার্যক্রম</button>
+
+<table>
+<thead>
+<tr>
+<th>কার্যক্রম</th>
+<th>অবস্থা</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="activityList">
+<tr>
+<td>শীতবস্ত্র বিতরণ</td>
+<td>চলমান</td>
+<td><button class="danger" onclick="remove(this)">Delete</button></td>
+</tr>
+<tr>
+<td>শিক্ষা সহায়তা</td>
+<td>সম্পন্ন</td>
+<td><button class="danger" onclick="remove(this)">Delete</button></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- MEMBERS -->
+<section id="members" class="page">
+<h1>সদস্য ব্যবস্থাপনা</h1>
+
+<div class="panel">
+<button class="primary" onclick="addMember()">+ সদস্য যোগ করুন</button>
+
+<table>
+<thead>
+<tr>
+<th>নাম</th>
+<th>মোবাইল</th>
+<th>ভূমিকা</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody id="membersList">
+<tr>
+<td>মোঃ রহমান</td>
+<td>01XXXXXXXXX</td>
+<td>স্বেচ্ছাসেবক</td>
+<td><button class="danger" onclick="remove(this)">Delete</button></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- MESSAGES -->
+<section id="messages" class="page">
+<h1>মেসেজ</h1>
+
+<div class="panel">
+<table>
+<thead>
+<tr><th>নাম</th><th>মেসেজ</th></tr>
+</thead>
+<tbody>
+<tr>
+<td>সাইফুল ইসলাম</td>
+<td>আমি স্বেচ্ছাসেবক হিসেবে যুক্ত হতে চাই।</td>
+</tr>
+<tr>
+<td>নাসরিন</td>
+<td>সংগঠনের কার্যক্রম সম্পর্কে জানতে চাই।</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<!-- SETTINGS -->
+<section id="settings" class="page">
+<h1>Security Settings</h1>
+
+<div class="panel">
+
+<h3>Admin Security</h3>
+
+<label>New Password</label>
+<input type="password" placeholder="নতুন password">
+
+<label>Two Factor Authentication</label>
+<p>🔐 Production backend-এ 2FA/OTP যুক্ত করা যাবে।</p>
+
+<label>Session Security</label>
+<p>🔒 Server-side session + CSRF protection ব্যবহার করতে হবে।</p>
+
+<button class="primary" onclick="alert('Settings saved')">
+Save Security Settings
+</button>
+
+</div>
+</section>
+
+</div>
+</main>
+</div>
 
 <script>
 
-async function login() {
+function login(){
 
-  const username =
-    document.getElementById("username").value;
+/*
+  SECURITY WARNING:
 
-  const password =
-    document.getElementById("password").value;
+  এখানে password রাখা হয়নি।
 
-  const response = await fetch(
-    "/api/login",
-    {
-      method: "POST",
+  GitHub Pages-এ JavaScript দিয়ে password যাচাই করলে
+  যে কেউ source code দেখে password বের করতে পারে।
 
-      headers: {
-        "Content-Type": "application/json"
-      },
+  Production version-এ এই function-এর জায়গায়:
+  HTTPS + Backend + Password Hash + Session + CSRF
+  ব্যবহার করতে হবে।
+*/
 
-      body: JSON.stringify({
-        username,
-        password
-      })
-    }
-  );
-
-  const data = await response.json();
-
-  if (data.success) {
-
-    document
-      .getElementById("loginBox")
-      .classList.add("hidden");
-
-    document
-      .getElementById("dashboard")
-      .classList.remove("hidden");
-
-    loadData();
-
-  } else {
-
-    document
-      .getElementById("loginMessage")
-      .innerText =
-      data.message;
-
-  }
+document.getElementById("error").textContent =
+"এই demo-তে নিরাপদ backend login সংযুক্ত করা হয়নি।";
 
 }
 
-
-async function logout() {
-
-  await fetch(
-    "/api/logout",
-    {
-      method: "POST"
-    }
-  );
-
-  location.reload();
-
+function logout(){
+document.getElementById("app").style.display="none";
+document.getElementById("login").style.display="grid";
 }
 
+function showPage(id){
 
-async function loadData() {
+document.querySelectorAll(".page").forEach(
+p=>p.classList.remove("active")
+);
 
-  const balanceResponse =
-    await fetch("/api/balance");
+document.getElementById(id).classList.add("active");
 
-  const balanceData =
-    await balanceResponse.json();
-
-  document.getElementById(
-    "balance"
-  ).innerText =
-    "৳" +
-    Number(balanceData.balance)
-      .toLocaleString("bn-BD");
-
-
-  const response =
-    await fetch("/api/transactions");
-
-  const transactions =
-    await response.json();
-
-  let deposit = 0;
-  let withdraw = 0;
-
-  const list =
-    document.getElementById(
-      "transactionList"
-    );
-
-  list.innerHTML = "";
-
-  transactions.forEach(item => {
-
-    if (item.type === "deposit") {
-      deposit += Number(item.amount);
-    } else {
-      withdraw += Number(item.amount);
-    }
-
-    const tr =
-      document.createElement("tr");
-
-    tr.innerHTML = `
-
-      <td>
-        ${item.created_at}
-      </td>
-
-      <td class="${
-        item.type === "deposit"
-          ? "deposit"
-          : "withdraw"
-      }">
-
-        ${
-          item.type === "deposit"
-            ? "জমা"
-            : "উত্তোলন"
-        }
-
-      </td>
-
-      <td>
-        ${escapeHtml(item.member)}
-      </td>
-
-      <td>
-        ৳${Number(item.amount)
-          .toLocaleString("bn-BD")}
-      </td>
-
-      <td>
-        ${escapeHtml(item.note || "")}
-      </td>
-
-      <td>
-
-        <button
-          onclick="editTransaction(${item.id})"
-        >
-          Edit
-        </button>
-
-        <button
-          onclick="deleteTransaction(${item.id})"
-          style="background:#c62828"
-        >
-          Delete
-        </button>
-
-      </td>
-
-    `;
-
-    list.appendChild(tr);
-
-  });
-
-
-  document.getElementById(
-    "totalDeposit"
-  ).innerText =
-    "৳" +
-    deposit.toLocaleString("bn-BD");
-
-
-  document.getElementById(
-    "totalWithdraw"
-  ).innerText =
-    "৳" +
-    withdraw.toLocaleString("bn-BD");
-
+window.scrollTo(0,0);
 }
 
-
-async function addTransaction() {
-
-  const type =
-    document.getElementById("type").value;
-
-  const member =
-    document.getElementById("member").value;
-
-  const amount =
-    document.getElementById("amount").value;
-
-  const note =
-    document.getElementById("note").value;
-
-
-  const response =
-    await fetch(
-      "/api/transactions",
-      {
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify({
-          type,
-          member,
-          amount,
-          note
-        })
-      }
-    );
-
-
-  const data =
-    await response.json();
-
-
-  if (!response.ok) {
-
-    document.getElementById(
-      "message"
-    ).innerText =
-      data.message;
-
-    return;
-  }
-
-
-  document.getElementById(
-    "message"
-  ).innerText =
-    "হিসাব সফলভাবে সংরক্ষণ হয়েছে।";
-
-
-  document.getElementById(
-    "member"
-  ).value = "";
-
-  document.getElementById(
-    "amount"
-  ).value = "";
-
-  document.getElementById(
-    "note"
-  ).value = "";
-
-
-  loadData();
-
+function saveHome(){
+alert("Home information saved — backend যুক্ত হলে database-এ সংরক্ষণ হবে।");
 }
 
+function addActivity(){
 
-async function editTransaction(id) {
+let name=prompt("কার্যক্রমের নাম:");
 
-  const member =
-    prompt(
-      "নতুন নাম লিখুন:"
-    );
+if(!name)return;
 
-  if (!member) return;
+let tr=document.createElement("tr");
 
+tr.innerHTML=
+"<td>"+escapeHTML(name)+"</td>"+
+"<td>নতুন</td>"+
+'<td><button class="danger" onclick="remove(this)">Delete</button></td>';
 
-  const amount =
-    prompt(
-      "নতুন পরিমাণ লিখুন:"
-    );
-
-  if (!amount) return;
-
-
-  const note =
-    prompt(
-      "নতুন বিবরণ লিখুন:"
-    );
-
-
-  const transactions =
-    await fetch(
-      "/api/transactions"
-    );
-
-  const data =
-    await transactions.json();
-
-  const old =
-    data.find(x => x.id === id);
-
-
-  await fetch(
-    `/api/transactions/${id}`,
-    {
-      method: "PUT",
-
-      headers: {
-        "Content-Type": "application/json"
-      },
-
-      body: JSON.stringify({
-        type: old.type,
-        member,
-        amount,
-        note
-      })
-    }
-  );
-
-
-  loadData();
-
+document.getElementById("activityList").appendChild(tr);
 }
 
+function addMember(){
 
-async function deleteTransaction(id) {
+let name=prompt("সদস্যের নাম:");
 
-  if (
-    !confirm(
-      "এই হিসাবটি মুছে ফেলতে চান?"
-    )
-  ) {
-    return;
-  }
+if(!name)return;
 
+let tr=document.createElement("tr");
 
-  await fetch(
-    `/api/transactions/${id}`,
-    {
-      method: "DELETE"
-    }
-  );
+tr.innerHTML=
+"<td>"+escapeHTML(name)+"</td>"+
+"<td>—</td>"+
+"<td>সদস্য</td>"+
+'<td><button class="danger" onclick="remove(this)">Delete</button></td>';
 
-
-  loadData();
-
+document.getElementById("membersList").appendChild(tr);
 }
 
-function escapeHtml(text) {
+function remove(button){
+button.closest("tr").remove();
+}
 
-  const div =
-    document.createElement("div");
+function escapeHTML(text){
 
-  div.textContent = text;
-
-  return div.innerHTML;
+return text.replace(/[&<>"']/g,function(m){
+return {
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+}[m];
+});
 
 }
 
