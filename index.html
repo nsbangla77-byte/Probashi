@@ -1,177 +1,631 @@
-Update this existing Vite + React + TypeScript project into a Bangladeshi expatriate community member portal.
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-IMPORTANT:
-- Do not delete existing working features.
-- Keep the existing project structure.
-- Make the UI mobile-first and responsive.
-- Use attractive modern AI-style gradients, glass effects and subtle animations.
-- Use official brand logos/icons for Facebook, YouTube, TikTok, WhatsApp, Messenger and IMO, while respecting their brand guidelines.
-- Use Lucide icons for generic UI icons.
-- Use 3D-style cards/icons where appropriate, but keep text readable.
+  <title>সংগঠনের হিসাব</title>
 
-AUTHENTICATION FLOW:
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-1. Registration page must appear before entering the private member area.
-2. Registration fields:
-   - First Name
-   - Last Name
-   - Father's Name
-   - Mother's Name
-   - Mobile Number
-   - Village
-   - District
-   - Post Office
-   - Password
-   - Confirm Password
-3. Validate all required fields.
-4. Password and Confirm Password must match.
-5. Mobile number verification must use OTP verification.
-6. Do not mark a number as verified just because it was entered.
-7. Use Supabase Auth/OTP if Supabase is already configured.
-8. After successful verification, save member profile information in a profiles/members table.
-9. After registration and verification, redirect the user to the private member dashboard.
-10. Unauthenticated users must not be able to access the private dashboard.
-11. Add Logout.
-12. Add Login page for existing members.
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #222;
+    }
 
-MEMBER DASHBOARD:
+    .container {
+      width: 95%;
+      max-width: 1100px;
+      margin: 30px auto;
+    }
 
-Create an attractive dashboard with:
-- Member profile
-- Member name
-- Mobile number
-- Verified badge
-- Social/community links
-- APK/App download button
-- YouTube videos section
-- Community groups section
-- ESKL appointment link
-- Driver group
-- Worker group
-- WhatsApp contact buttons
+    .card {
+      background: white;
+      padding: 22px;
+      margin-bottom: 20px;
+      border-radius: 14px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.08);
+    }
 
-SOCIAL LINKS:
+    h1, h2 {
+      margin-top: 0;
+    }
 
-Facebook Page:
-https://www.facebook.com/share/1DPBjB3ePJ/
+    input,
+    select,
+    button {
+      width: 100%;
+      padding: 12px;
+      margin: 6px 0;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-size: 15px;
+    }
 
-YouTube Channel:
-https://www.youtube.com/@Bangladeshprobashifundclubf
+    button {
+      cursor: pointer;
+      border: none;
+      background: #0b7a43;
+      color: white;
+      font-weight: bold;
+    }
 
-WhatsApp Group:
-https://chat.whatsapp.com/D09urIUt fkdEjiVtqgIbY7?s=cl&p=a&ilr=4
+    button:hover {
+      opacity: .9;
+    }
 
-Messenger Group:
-https://m.me/j/AbazuYGAWNXaKYj3/?send_source=gc%3Acopy_invite_link
+    .logout {
+      background: #c62828;
+    }
 
-IMO Group:
-https://s.imoim.net/nLU12X
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
 
-WhatsApp Contact:
-https://wa.me/qr/5SBSJ55KMO7CB1
+    .stat {
+      text-align: center;
+      padding: 20px;
+      border-radius: 12px;
+      background: #eef8f2;
+    }
 
-WhatsApp Contact 2:
-https://wa.me/message/6ZU4EZJFBGAFM1
+    .stat strong {
+      display: block;
+      font-size: 28px;
+      margin-top: 8px;
+    }
 
-ESKL:
-https://www.expatservicesmy.com/ESKLPublicportal/Appointment/BookAppointment
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
 
-Driver Group:
-https://chat.whatsapp.com/HcEMStEP3un4uYDBBfH5b0?s=cl&p=a&ilr=4
+    th,
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+    }
 
-Worker Group:
-https://chat.whatsapp.com/Jl7W0RXQjEI7Mhgj5riBhu?s=qt&p=a&ilr=0
+    .deposit {
+      color: green;
+      font-weight: bold;
+    }
 
-YOUTUBE VIDEOS:
+    .withdraw {
+      color: red;
+      font-weight: bold;
+    }
 
-Add a "Our YouTube Videos" section using these videos:
+    .hidden {
+      display: none;
+    }
 
-https://youtu.be/DXB7gdJUlMw?si=IxsVw1rgzQEGmI-j
+    @media(max-width: 700px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
 
-https://youtu.be/I2mc2RXCEIA?si=f_NPlgC-n0RFVkyq
+      table {
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
 
-https://youtu.be/KumLOhgtgsM?si=gdZm9oyZQiC2g-N0
+<body>
 
-Display them as responsive video cards with thumbnails and play buttons. Prefer YouTube embed URLs where appropriate.
+<div class="container">
 
-APK:
-Add an "Download Member App" button/card.
-Make the APK URL configurable through a constant/env variable so it can be changed later without editing the UI.
+  <!-- Login -->
+  <div id="loginBox" class="card">
 
-SOCIAL ICON CARDS:
-Create beautiful 3D-style cards for:
-Facebook
-YouTube
-WhatsApp
-Messenger
-IMO
-TikTok
+    <h1>🔐 Admin Login</h1>
 
-Each card should have:
-- Official recognizable logo
-- Label
-- Short description
-- Open button
-- Hover/tap animation
-- External link opening safely in a new tab
+    <input
+      id="username"
+      placeholder="Username"
+    >
 
-TIKTOK:
-Add a TikTok profile/social card, but keep its URL configurable because no TikTok URL was provided yet.
+    <input
+      id="password"
+      type="password"
+      placeholder="Password"
+    >
 
-ANIMATION:
-Add subtle animations:
-- Page fade-in
-- Card hover/tap animation
-- Button press animation
-- Floating decorative elements
-- Dashboard section reveal animation
-Do not make animations excessive or slow on mobile devices.
+    <button onclick="login()">
+      Login
+    </button>
 
-DESIGN:
-- Premium modern community portal
-- AI-inspired colorful gradient design
-- 3D cards/icons
-- Clean white/dark readable text areas
-- Bangladesh/Malaysia expatriate community feeling
-- Fully responsive Android mobile layout
-- Large touch-friendly buttons
-- Avoid overcrowding
-- Keep all text readable
-- Use accessible contrast
-- Add loading states
-- Add validation error messages
-- Add success messages
+    <p id="loginMessage"></p>
 
-DATABASE:
-If Supabase is configured, create/use a members/profiles table containing:
-id
-first_name
-last_name
-father_name
-mother_name
-mobile
-village
-district
-post_office
-created_at
-updated_at
+  </div>
 
-Use the authenticated user's ID as the profile primary/foreign key.
-Do NOT store plaintext passwords in the profile table.
-Use Supabase Auth for passwords.
 
-SECURITY:
-- Protect private routes.
-- Only the authenticated member can read/update their own profile.
-- Add appropriate Row Level Security policies.
-- Never expose service-role keys in frontend code.
-- Never put secret API keys in the repository.
-- Keep .env.local out of Git.
-- Use VITE_ variables only for public frontend configuration.
+  <!-- Dashboard -->
+  <div id="dashboard" class="hidden">
 
-Finally:
-- Check TypeScript errors.
-- Check build errors.
-- Make sure all routes work.
-- Make sure registration → OTP verification → login → dashboard works.
-- Make sure the app still builds successfully with npm run build.
+    <div class="card">
+
+      <h1>
+        📊 সংগঠনের হিসাব ব্যবস্থাপনা
+      </h1>
+
+      <button
+        class="logout"
+        onclick="logout()"
+      >
+        Logout
+      </button>
+
+    </div>
+
+
+    <!-- Statistics -->
+
+    <div class="grid">
+
+      <div class="stat">
+        বর্তমান ব্যালেন্স
+        <strong id="balance">
+          ৳0
+        </strong>
+      </div>
+
+      <div class="stat">
+        মোট জমা
+        <strong id="totalDeposit">
+          ৳0
+        </strong>
+      </div>
+
+      <div class="stat">
+        মোট উত্তোলন
+        <strong id="totalWithdraw">
+          ৳0
+        </strong>
+      </div>
+
+    </div>
+
+
+    <!-- Add transaction -->
+
+    <div class="card">
+
+      <h2>
+        ➕ নতুন হিসাব যোগ করুন
+      </h2>
+
+      <select id="type">
+
+        <option value="deposit">
+          টাকা জমা
+        </option>
+
+        <option value="withdraw">
+          টাকা উত্তোলন
+        </option>
+
+      </select>
+
+      <input
+        id="member"
+        placeholder="সদস্য/ব্যক্তির নাম"
+      >
+
+      <input
+        id="amount"
+        type="number"
+        placeholder="টাকার পরিমাণ"
+      >
+
+      <input
+        id="note"
+        placeholder="বিবরণ"
+      >
+
+      <button onclick="addTransaction()">
+        হিসাব সংরক্ষণ করুন
+      </button>
+
+      <p id="message"></p>
+
+    </div>
+
+
+    <!-- Transactions -->
+
+    <div class="card">
+
+      <h2>
+        📜 লেনদেনের ইতিহাস
+      </h2>
+
+      <table>
+
+        <thead>
+
+          <tr>
+            <th>তারিখ</th>
+            <th>ধরন</th>
+            <th>নাম</th>
+            <th>পরিমাণ</th>
+            <th>বিবরণ</th>
+            <th>Action</th>
+          </tr>
+
+        </thead>
+
+        <tbody id="transactionList"></tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+async function login() {
+
+  const username =
+    document.getElementById("username").value;
+
+  const password =
+    document.getElementById("password").value;
+
+  const response = await fetch(
+    "/api/login",
+    {
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        username,
+        password
+      })
+    }
+  );
+
+  const data = await response.json();
+
+  if (data.success) {
+
+    document
+      .getElementById("loginBox")
+      .classList.add("hidden");
+
+    document
+      .getElementById("dashboard")
+      .classList.remove("hidden");
+
+    loadData();
+
+  } else {
+
+    document
+      .getElementById("loginMessage")
+      .innerText =
+      data.message;
+
+  }
+
+}
+
+
+async function logout() {
+
+  await fetch(
+    "/api/logout",
+    {
+      method: "POST"
+    }
+  );
+
+  location.reload();
+
+}
+
+
+async function loadData() {
+
+  const balanceResponse =
+    await fetch("/api/balance");
+
+  const balanceData =
+    await balanceResponse.json();
+
+  document.getElementById(
+    "balance"
+  ).innerText =
+    "৳" +
+    Number(balanceData.balance)
+      .toLocaleString("bn-BD");
+
+
+  const response =
+    await fetch("/api/transactions");
+
+  const transactions =
+    await response.json();
+
+  let deposit = 0;
+  let withdraw = 0;
+
+  const list =
+    document.getElementById(
+      "transactionList"
+    );
+
+  list.innerHTML = "";
+
+  transactions.forEach(item => {
+
+    if (item.type === "deposit") {
+      deposit += Number(item.amount);
+    } else {
+      withdraw += Number(item.amount);
+    }
+
+    const tr =
+      document.createElement("tr");
+
+    tr.innerHTML = `
+
+      <td>
+        ${item.created_at}
+      </td>
+
+      <td class="${
+        item.type === "deposit"
+          ? "deposit"
+          : "withdraw"
+      }">
+
+        ${
+          item.type === "deposit"
+            ? "জমা"
+            : "উত্তোলন"
+        }
+
+      </td>
+
+      <td>
+        ${escapeHtml(item.member)}
+      </td>
+
+      <td>
+        ৳${Number(item.amount)
+          .toLocaleString("bn-BD")}
+      </td>
+
+      <td>
+        ${escapeHtml(item.note || "")}
+      </td>
+
+      <td>
+
+        <button
+          onclick="editTransaction(${item.id})"
+        >
+          Edit
+        </button>
+
+        <button
+          onclick="deleteTransaction(${item.id})"
+          style="background:#c62828"
+        >
+          Delete
+        </button>
+
+      </td>
+
+    `;
+
+    list.appendChild(tr);
+
+  });
+
+
+  document.getElementById(
+    "totalDeposit"
+  ).innerText =
+    "৳" +
+    deposit.toLocaleString("bn-BD");
+
+
+  document.getElementById(
+    "totalWithdraw"
+  ).innerText =
+    "৳" +
+    withdraw.toLocaleString("bn-BD");
+
+}
+
+
+async function addTransaction() {
+
+  const type =
+    document.getElementById("type").value;
+
+  const member =
+    document.getElementById("member").value;
+
+  const amount =
+    document.getElementById("amount").value;
+
+  const note =
+    document.getElementById("note").value;
+
+
+  const response =
+    await fetch(
+      "/api/transactions",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          type,
+          member,
+          amount,
+          note
+        })
+      }
+    );
+
+
+  const data =
+    await response.json();
+
+
+  if (!response.ok) {
+
+    document.getElementById(
+      "message"
+    ).innerText =
+      data.message;
+
+    return;
+  }
+
+
+  document.getElementById(
+    "message"
+  ).innerText =
+    "হিসাব সফলভাবে সংরক্ষণ হয়েছে।";
+
+
+  document.getElementById(
+    "member"
+  ).value = "";
+
+  document.getElementById(
+    "amount"
+  ).value = "";
+
+  document.getElementById(
+    "note"
+  ).value = "";
+
+
+  loadData();
+
+}
+
+
+async function editTransaction(id) {
+
+  const member =
+    prompt(
+      "নতুন নাম লিখুন:"
+    );
+
+  if (!member) return;
+
+
+  const amount =
+    prompt(
+      "নতুন পরিমাণ লিখুন:"
+    );
+
+  if (!amount) return;
+
+
+  const note =
+    prompt(
+      "নতুন বিবরণ লিখুন:"
+    );
+
+
+  const transactions =
+    await fetch(
+      "/api/transactions"
+    );
+
+  const data =
+    await transactions.json();
+
+  const old =
+    data.find(x => x.id === id);
+
+
+  await fetch(
+    `/api/transactions/${id}`,
+    {
+      method: "PUT",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        type: old.type,
+        member,
+        amount,
+        note
+      })
+    }
+  );
+
+
+  loadData();
+
+}
+
+
+async function deleteTransaction(id) {
+
+  if (
+    !confirm(
+      "এই হিসাবটি মুছে ফেলতে চান?"
+    )
+  ) {
+    return;
+  }
+
+
+  await fetch(
+    `/api/transactions/${id}`,
+    {
+      method: "DELETE"
+    }
+  );
+
+
+  loadData();
+
+}
+
+function escapeHtml(text) {
+
+  const div =
+    document.createElement("div");
+
+  div.textContent = text;
+
+  return div.innerHTML;
+
+}
+
+</script>
+
+</body>
+</html>
