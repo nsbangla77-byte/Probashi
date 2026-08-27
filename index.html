@@ -1,1327 +1,1666 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090a08">
-<meta name="description" content="Probashi & Youth Welfare Cooperative Society">
-<title>Probashi & Youth Welfare Cooperative Society</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>প্রবাসী ও যুব কল্যাণ সমবায় সমিতি</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-  -webkit-tap-highlight-color:transparent;
-}
 
-html{
-  scroll-behavior:smooth;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:"Noto Sans Bengali",Arial,sans-serif;
 }
 
 body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:
-    radial-gradient(circle at 50% 8%,rgba(255,205,30,.13),transparent 25%),
-    radial-gradient(circle at 10% 50%,rgba(255,190,0,.05),transparent 25%),
-    #050706;
-  color:#fff;
-  min-height:100vh;
+min-height:100vh;
+color:#fff;
+background:
+radial-gradient(circle at 10% 10%,#00e5ff55,transparent 30%),
+radial-gradient(circle at 90% 10%,#ff00cc55,transparent 30%),
+radial-gradient(circle at 50% 100%,#ffd70044,transparent 35%),
+linear-gradient(135deg,#03132c,#071d46,#17082e);
+overflow-x:hidden;
 }
 
-button,a{
-  font-family:inherit;
+body:before{
+content:"";
+position:fixed;
+width:350px;
+height:350px;
+border-radius:50%;
+background:#00e5ff;
+filter:blur(150px);
+opacity:.15;
+left:-150px;
+top:20%;
+z-index:-1;
+animation:move1 8s infinite alternate;
 }
 
-a{
-  text-decoration:none;
-  color:inherit;
+body:after{
+content:"";
+position:fixed;
+width:350px;
+height:350px;
+border-radius:50%;
+background:#ff00d4;
+filter:blur(150px);
+opacity:.15;
+right:-150px;
+bottom:10%;
+z-index:-1;
+animation:move2 9s infinite alternate;
 }
 
-.app{
-  width:100%;
-  max-width:1100px;
-  margin:auto;
-  min-height:100vh;
-  padding-bottom:95px;
+@keyframes move1{
+to{transform:translate(180px,-100px)}
 }
 
-/* TOP BAR */
-.topbar{
-  position:sticky;
-  top:0;
-  z-index:100;
-  height:70px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:10px 18px;
-  background:rgba(5,7,6,.88);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid rgba(255,210,30,.18);
+@keyframes move2{
+to{transform:translate(-180px,100px)}
 }
 
-.round-btn{
-  width:48px;
-  height:48px;
-  border:1px solid #dcb900;
-  border-radius:50%;
-  background:rgba(15,16,14,.9);
-  color:#ffd51b;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:25px;
-  cursor:pointer;
-  box-shadow:0 0 18px rgba(255,210,0,.12);
+.container{
+width:94%;
+max-width:1200px;
+margin:auto;
 }
 
-.round-btn:active{
-  transform:scale(.92);
-}
+/* HEADER */
 
-/* HERO */
-.hero{
-  text-align:center;
-  padding:35px 15px 25px;
+header{
+padding:25px 10px;
+text-align:center;
 }
 
 .logo{
-  width:150px;
-  height:150px;
-  object-fit:contain;
-  border-radius:50%;
-  padding:7px;
-  border:4px solid #ffd21a;
-  background:#10120f;
-  box-shadow:
-    0 0 12px #ffd21a,
-    0 0 40px rgba(255,205,20,.35);
-  animation:floatLogo 4s ease-in-out infinite;
+width:95px;
+height:95px;
+margin:auto;
+border-radius:28px;
+overflow:hidden;
+background:linear-gradient(145deg,#00e5ff,#7855ff,#ff00c8);
+box-shadow:
+0 20px 40px #0008,
+inset 0 3px 10px #fff8;
+animation:float 3s infinite ease-in-out;
 }
 
-@keyframes floatLogo{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-9px)}
+.logo img{
+width:100%;
+height:100%;
+object-fit:contain;
+padding:8px;
 }
 
-.hero h1{
-  margin-top:25px;
-  color:#ffd21a;
-  font-size:clamp(27px,6vw,52px);
-  line-height:1.25;
-  text-shadow:
-    0 0 5px #ffd21a,
-    0 0 18px rgba(255,210,20,.45);
+.logo-fallback{
+width:100%;
+height:100%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:48px;
 }
 
-.hero h2{
-  margin-top:10px;
-  color:#ddd;
-  font-size:clamp(14px,3vw,21px);
-  font-weight:400;
-  letter-spacing:.4px;
+@keyframes float{
+0%,100%{transform:translateY(0) rotateY(0)}
+50%{transform:translateY(-10px) rotateY(8deg)}
+}
+
+header h1{
+font-size:29px;
+margin-top:15px;
+text-shadow:0 5px 20px #000;
+}
+
+header p{
+margin-top:7px;
+color:#d5f8ff;
+}
+
+/* CARD */
+
+.card{
+background:#ffffff10;
+border:1px solid #ffffff25;
+border-radius:25px;
+padding:25px;
+margin:20px 0;
+backdrop-filter:blur(18px);
+box-shadow:
+0 20px 50px #0006,
+inset 0 1px 0 #ffffff20;
+}
+
+.card h2{
+text-align:center;
+margin-bottom:20px;
+}
+
+/* FORM */
+
+.form-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:14px;
+}
+
+.input-box{
+position:relative;
+}
+
+input{
+width:100%;
+padding:15px;
+border-radius:14px;
+border:1px solid #ffffff25;
+outline:none;
+background:#ffffff0d;
+color:#fff;
+font-size:15px;
+}
+
+input::placeholder{
+color:#d0dbea;
+}
+
+input:focus{
+border-color:#00e5ff;
+box-shadow:0 0 18px #00e5ff55;
+}
+
+button{
+border:0;
+width:100%;
+padding:15px;
+border-radius:15px;
+margin-top:18px;
+color:#fff;
+font-size:16px;
+font-weight:bold;
+cursor:pointer;
+
+background:
+linear-gradient(
+90deg,
+#00bfff,
+#6655ff,
+#e000ff
+);
+
+box-shadow:0 10px 25px #0006;
+transition:.3s;
+}
+
+button:hover{
+transform:translateY(-3px) scale(1.01);
+box-shadow:0 15px 30px #0008;
+}
+
+.verify-btn{
+margin-top:8px;
+background:linear-gradient(90deg,#00a86b,#00d084);
+}
+
+.verified{
+display:none;
+margin-top:10px;
+padding:10px;
+border-radius:12px;
+text-align:center;
+background:#00ff9d18;
+border:1px solid #00ff9d44;
+color:#6fffd1;
+}
+
+.switch{
+text-align:center;
+margin-top:18px;
+color:#6eeaff;
+cursor:pointer;
+}
+
+.hidden{
+display:none!important;
+}
+
+/* DASHBOARD */
+
+.dashboard{
+display:grid;
+grid-template-columns:220px 1fr;
+gap:18px;
+}
+
+.sidebar{
+background:#ffffff0c;
+border:1px solid #ffffff20;
+border-radius:23px;
+padding:15px;
+height:max-content;
+position:sticky;
+top:15px;
+}
+
+.side-title{
+text-align:center;
+font-weight:bold;
+padding:12px;
+margin-bottom:10px;
+}
+
+.side-btn{
+width:100%;
+padding:13px;
+margin:5px 0;
+border:0;
+border-radius:13px;
+background:#ffffff0c;
+color:#fff;
+text-align:left;
+cursor:pointer;
+}
+
+.side-btn:hover,
+.side-btn.active{
+background:linear-gradient(90deg,#00bfff66,#9b35ff66);
+}
+
+.logout{
+background:linear-gradient(90deg,#ff3155,#ff008c);
+}
+
+/* WELCOME */
+
+.welcome{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:15px;
+}
+
+.member-photo{
+width:65px;
+height:65px;
+border-radius:20px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:32px;
+background:linear-gradient(145deg,#00e5ff,#8a35ff);
+box-shadow:0 10px 25px #0006;
+}
+
+/* SOCIAL GRID */
+
+.social-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:15px;
+}
+
+.social{
+text-decoration:none;
+color:#fff;
+min-height:135px;
+border-radius:22px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:10px;
+
+background:
+linear-gradient(
+145deg,
+#ffffff22,
+#ffffff08
+);
+
+border:1px solid #ffffff22;
+
+box-shadow:
+0 12px 25px #0005,
+inset 0 2px 5px #fff3;
+
+transition:.35s;
+}
+
+.social:hover{
+transform:translateY(-8px) scale(1.04);
+box-shadow:
+0 20px 35px #0008,
+0 0 25px #00e5ff33;
+}
+
+.social-icon{
+width:65px;
+height:65px;
+border-radius:20px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:34px;
+
+background:linear-gradient(
+145deg,
+#ffffff30,
+#ffffff08
+);
+
+box-shadow:
+0 8px 18px #0006,
+inset 0 2px 5px #fff5;
+}
+
+.facebook{background:linear-gradient(145deg,#1877f2,#0756bd)}
+.youtube{background:linear-gradient(145deg,#ff3030,#b50000)}
+.whatsapp{background:linear-gradient(145deg,#25d366,#07963e)}
+.messenger{background:linear-gradient(145deg,#00b2ff,#7b35ff)}
+.imo{background:linear-gradient(145deg,#00cfff,#006eff)}
+.tiktok{background:linear-gradient(145deg,#111,#333)}
+.eskl{background:linear-gradient(145deg,#00a9d9,#005c88)}
+.driver{background:linear-gradient(145deg,#ffb000,#e86d00)}
+.walker{background:linear-gradient(145deg,#a855f7,#5420a0)}
+.apk{background:linear-gradient(145deg,#36d34a,#098f25)}
+
+/* PROFILE */
+
+.profile-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
 }
 
 .info{
-  margin-top:18px;
-  color:#cfcfcf;
-  font-size:15px;
+padding:13px;
+border-radius:13px;
+background:#ffffff0b;
+border:1px solid #ffffff15;
 }
 
 .info span{
-  margin:0 7px;
+display:block;
+font-size:12px;
+color:#aeeeff;
+margin-bottom:4px;
 }
 
-/* SHARE */
-.share-area{
-  display:flex;
-  justify-content:center;
-  margin:5px 15px 25px;
+.badge{
+display:inline-block;
+padding:6px 12px;
+border-radius:20px;
+background:#00ff9d20;
+color:#6fffd2;
+font-size:13px;
 }
 
-.share-btn{
-  border:1px solid #ffd21a;
-  background:linear-gradient(145deg,#1a1b18,#080a09);
-  color:#ffd21a;
-  border-radius:30px;
-  padding:13px 25px;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-  box-shadow:0 0 18px rgba(255,210,20,.12);
+/* VIDEO */
+
+.video-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
 }
 
-.share-btn:active{
-  transform:scale(.96);
+.video{
+text-decoration:none;
+color:#fff;
+padding:20px;
+border-radius:20px;
+background:#ffffff0c;
+border:1px solid #ffffff20;
+transition:.3s;
 }
 
-/* SECTION */
-.section-title{
-  text-align:center;
-  color:#ffd21a;
-  font-size:20px;
-  margin:15px 0 18px;
-  letter-spacing:1px;
+.video:hover{
+transform:translateY(-7px);
 }
 
-/* FEATURE GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:14px;
-  padding:0 18px;
+.video-icon{
+font-size:48px;
+text-align:center;
+margin-bottom:12px;
 }
 
-.card{
-  position:relative;
-  min-height:220px;
-  border:1px solid rgba(255,210,20,.55);
-  border-radius:25px;
-  background:
-    linear-gradient(145deg,rgba(31,34,31,.9),rgba(7,9,8,.98));
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:25px 10px 15px;
-  overflow:hidden;
-  transition:.25s;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.04),
-    0 8px 25px rgba(0,0,0,.35);
+.video p{
+opacity:.7;
+margin-top:8px;
+font-size:13px;
 }
 
-.card::before{
-  content:"";
-  position:absolute;
-  width:110px;
-  height:110px;
-  border-radius:50%;
-  background:rgba(255,210,20,.07);
-  filter:blur(25px);
-  top:-40px;
-  right:-30px;
+/* NOTICE */
+
+.notice{
+padding:15px;
+border-radius:15px;
+margin:8px 0;
+background:linear-gradient(90deg,#00bfff12,#9d00ff12);
+border-left:4px solid #00d9ff;
 }
 
-.card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 0 28px rgba(255,210,20,.18);
-}
+/* FOOTER */
 
-.number{
-  position:absolute;
-  top:10px;
-  left:10px;
-  width:39px;
-  height:39px;
-  border:2px solid #ffd21a;
-  color:#ffd21a;
-  border-radius:50%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  font-weight:bold;
-  font-size:18px;
-  background:#0c0e0c;
-}
-
-.icon{
-  width:82px;
-  height:82px;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:38px;
-  font-weight:bold;
-  margin-bottom:15px;
-  border:3px solid rgba(255,255,255,.55);
-  box-shadow:
-    inset 0 4px 7px rgba(255,255,255,.3),
-    0 7px 15px rgba(0,0,0,.5);
-}
-
-.blue{background:linear-gradient(145deg,#3587ff,#0753ca)}
-.red{background:linear-gradient(145deg,#ff3434,#bd0000)}
-.green{background:linear-gradient(145deg,#22ce6b,#008f45)}
-.gray{background:linear-gradient(145deg,#555,#111)}
-.orange{background:linear-gradient(145deg,#eaa21c,#a85e00)}
-.cyan{background:linear-gradient(145deg,#29bde0,#087e9c)}
-.purple{background:linear-gradient(145deg,#9b58ff,#4816a0)}
-
-.card-title{
-  text-align:center;
-  font-size:16px;
-  font-weight:bold;
-  line-height:1.3;
-}
-
-.card-arrow{
-  position:absolute;
-  right:10px;
-  bottom:10px;
-  width:35px;
-  height:35px;
-  border:1px solid #ffd21a;
-  color:#ffd21a;
-  border-radius:50%;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-/* BOTTOM NAV */
-.bottom-nav{
-  position:fixed;
-  z-index:150;
-  left:50%;
-  bottom:0;
-  transform:translateX(-50%);
-  width:min(1100px,100%);
-  height:78px;
-  display:grid;
-  grid-template-columns:repeat(5,1fr);
-  background:rgba(5,7,6,.94);
-  backdrop-filter:blur(18px);
-  border:1px solid rgba(255,210,20,.45);
-  border-bottom:0;
-  border-radius:25px 25px 0 0;
-}
-
-.nav-btn{
-  border:0;
-  background:none;
-  color:#888;
-  font-size:12px;
-  cursor:pointer;
-}
-
-.nav-icon{
-  display:block;
-  font-size:25px;
-  margin-bottom:5px;
-}
-
-.nav-btn.active{
-  color:#ffd21a;
-}
-
-/* MODALS */
-.modal{
-  position:fixed;
-  inset:0;
-  z-index:300;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-  background:rgba(0,0,0,.75);
-  backdrop-filter:blur(7px);
-}
-
-.modal.show{
-  display:flex;
-}
-
-.modal-box{
-  width:min(500px,100%);
-  max-height:90vh;
-  overflow:auto;
-  border:1px solid #ffd21a;
-  border-radius:28px;
-  background:linear-gradient(145deg,#171916,#060807);
-  padding:25px;
-  box-shadow:0 0 50px rgba(255,210,20,.18);
-}
-
-.modal-head{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  margin-bottom:20px;
-}
-
-.modal-head h2{
-  color:#ffd21a;
-}
-
-.close{
-  border:0;
-  background:none;
-  color:#aaa;
-  font-size:28px;
-  cursor:pointer;
-}
-
-.input{
-  width:100%;
-  padding:15px;
-  margin-bottom:12px;
-  border:1px solid #685b16;
-  border-radius:14px;
-  background:#0b0d0b;
-  color:#fff;
-  outline:none;
-  font-size:15px;
-}
-
-.input:focus{
-  border-color:#ffd21a;
-}
-
-.gold-btn{
-  width:100%;
-  padding:15px;
-  border:0;
-  border-radius:15px;
-  background:#ffd21a;
-  color:#111;
-  font-weight:bold;
-  font-size:16px;
-  cursor:pointer;
-  margin-top:5px;
-}
-
-.admin-item{
-  border:1px solid #403b1a;
-  border-radius:18px;
-  padding:15px;
-  margin-bottom:12px;
-}
-
-.admin-item label{
-  display:block;
-  color:#ffd21a;
-  margin-bottom:8px;
-  font-weight:bold;
-}
-
-.danger{
-  background:#a40000;
-  color:#fff;
-}
-
-.status{
-  text-align:center;
-  margin-top:10px;
-  color:#ff7070;
-  min-height:20px;
-}
-
-/* TOAST */
-.toast{
-  position:fixed;
-  z-index:500;
-  left:50%;
-  bottom:95px;
-  transform:translateX(-50%) translateY(20px);
-  background:#ffd21a;
-  color:#111;
-  padding:13px 20px;
-  border-radius:30px;
-  font-weight:bold;
-  opacity:0;
-  pointer-events:none;
-  transition:.3s;
-  max-width:90%;
-  text-align:center;
-}
-
-.toast.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
+footer{
+text-align:center;
+padding:30px 10px;
+opacity:.75;
 }
 
 /* RESPONSIVE */
-@media(max-width:800px){
-  .grid{
-    grid-template-columns:repeat(2,1fr);
-  }
 
-  .card{
-    min-height:205px;
-  }
+@media(max-width:850px){
+
+.dashboard{
+grid-template-columns:1fr;
 }
 
-@media(max-width:430px){
-  .hero{
-    padding-top:25px;
-  }
-
-  .logo{
-    width:135px;
-    height:135px;
-  }
-
-  .grid{
-    gap:10px;
-    padding:0 12px;
-  }
-
-  .card{
-    min-height:190px;
-    border-radius:20px;
-  }
-
-  .icon{
-    width:72px;
-    height:72px;
-    font-size:32px;
-  }
-
-  .card-title{
-    font-size:14px;
-  }
-
-  .bottom-nav{
-    height:73px;
-  }
+.sidebar{
+position:static;
 }
+
+.social-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.video-grid{
+grid-template-columns:1fr;
+}
+
+}
+
+@media(max-width:600px){
+
+.form-grid{
+grid-template-columns:1fr;
+}
+
+.profile-grid{
+grid-template-columns:1fr;
+}
+
+header h1{
+font-size:23px;
+}
+
+.card{
+padding:18px;
+}
+
+.social{
+min-height:120px;
+}
+
+.social-icon{
+width:55px;
+height:55px;
+font-size:28px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div class="container">
 
-  <header class="topbar">
-    <button class="round-btn" onclick="showMenu()">☰</button>
+<!-- HEADER -->
 
-    <button class="round-btn" onclick="openAdmin()">
-      ⚙
-    </button>
-  </header>
+<header>
 
-  <section class="hero">
+<div class="logo">
 
-    <img id="logo"
-         class="logo"
-         src=""
-         alt="BPM Logo">
+<img
+src="logo.png"
+alt="সংগঠনের লোগো"
+onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+>
 
-    <h1 id="orgBn">প্রবাসী ও যুব কল্যাণ সমবায় সমিতি</h1>
-
-    <h2 id="orgEn">
-      PROBASHI &amp; YOUTH WELFARE COOPERATIVE SOCIETY
-    </h2>
-
-    <div class="info">
-      ✥ <span id="location">কলারাপুর মালয়েশিয়া</span>
-      ▣ <span id="date">01.01.2026</span>
-    </div>
-
-  </section>
-
-  <div class="share-area">
-    <button class="share-btn" onclick="shareSite()">
-      📤 Share Website
-    </button>
-  </div>
-
-  <h3 class="section-title">FEATURES</h3>
-
-  <main class="grid" id="featureGrid"></main>
+<div
+class="logo-fallback"
+style="display:none"
+>
+🤝
+</div>
 
 </div>
 
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav">
+<h1>
+প্রবাসী ও যুব কল্যাণ সমবায় সমিতি
+</h1>
 
-  <button class="nav-btn active" onclick="scrollHome()">
-    <span class="nav-icon">⌂</span>
-    Home
-  </button>
+<p>
+ঐক্য • সহযোগিতা • কল্যাণ • উন্নয়ন
+</p>
 
-  <button class="nav-btn" onclick="showToast('Services section coming soon')">
-    <span class="nav-icon">▦</span>
-    Services
-  </button>
+</header>
 
-  <button class="nav-btn" onclick="openAdmin()">
-    <span class="nav-icon">♟</span>
-    Admin
-  </button>
 
-  <button class="nav-btn" onclick="showToast('Gallery section coming soon')">
-    <span class="nav-icon">▧</span>
-    Gallery
-  </button>
+<!-- ================= REGISTRATION ================= -->
 
-  <button class="nav-btn" onclick="showToast('Contact section coming soon')">
-    <span class="nav-icon">☎</span>
-    Contact
-  </button>
+<section
+id="registerPage"
+class="card"
+>
 
-</nav>
+<h2>
+📝 নতুন সদস্য রেজিস্ট্রেশন
+</h2>
 
-<!-- ADMIN LOGIN -->
-<div class="modal" id="loginModal">
+<form id="registerForm">
 
-  <div class="modal-box">
+<div class="form-grid">
 
-    <div class="modal-head">
-      <h2>🔐 Admin Login</h2>
-      <button class="close" onclick="closeModal('loginModal')">×</button>
-    </div>
+<input
+id="firstName"
+type="text"
+placeholder="১. ফার্স্ট নাম"
+required
+>
 
-    <p style="color:#aaa;margin-bottom:15px">
-      Admin Username &amp; Password দিয়ে প্রবেশ করুন
-    </p>
+<input
+id="lastName"
+type="text"
+placeholder="লাষ্ট নাম"
+required
+>
 
-    <input
-      id="adminUser"
-      class="input"
-      type="text"
-      placeholder="Admin Username">
+<input
+id="fatherName"
+type="text"
+placeholder="২. বাবার নাম"
+required
+>
 
-    <input
-      id="adminPass"
-      class="input"
-      type="password"
-      placeholder="Password">
+<input
+id="motherName"
+type="text"
+placeholder="৩. মায়ের নাম"
+required
+>
 
-    <button class="gold-btn" onclick="loginAdmin()">
-      LOGIN
-    </button>
+<input
+id="mobile"
+type="tel"
+placeholder="৪. মোবাইল নম্বর"
+required
+>
 
-    <div class="status" id="loginStatus"></div>
+<input
+id="village"
+type="text"
+placeholder="৫. গ্রাম"
+required
+>
 
-  </div>
+<input
+id="district"
+type="text"
+placeholder="৬. জেলা"
+required
+>
+
+<input
+id="postOffice"
+type="text"
+placeholder="৭. পোস্ট অফিস"
+required
+>
+
+<input
+id="password"
+type="password"
+placeholder="৮. পাসওয়ার্ড"
+required
+>
+
+<input
+id="confirmPassword"
+type="password"
+placeholder="কনফার্ম পাসওয়ার্ড"
+required
+>
+
+<input
+id="tiktok"
+type="url"
+placeholder="১১. TikTok Link"
+>
+
 </div>
 
-<!-- ADMIN PANEL -->
-<div class="modal" id="adminModal">
 
-  <div class="modal-box">
+<!-- MOBILE VERIFICATION -->
 
-    <div class="modal-head">
-      <h2>⚙ Admin Panel</h2>
-      <button class="close" onclick="closeModal('adminModal')">×</button>
-    </div>
+<div style="margin-top:18px">
 
-    <div class="admin-item">
-      <label>Organization Bengali Name</label>
-      <input id="editBn" class="input" type="text">
-    </div>
+<label>
+📱 ৯. মোবাইল নম্বর ভেরিফিকেশন
+</label>
 
-    <div class="admin-item">
-      <label>Organization English Name</label>
-      <input id="editEn" class="input" type="text">
-    </div>
+<button
+type="button"
+class="verify-btn"
+onclick="verifyMobile()"
+>
+📲 নম্বর ভেরিফাই করুন
+</button>
 
-    <div class="admin-item">
-      <label>Location</label>
-      <input id="editLocation" class="input" type="text">
-    </div>
-
-    <div class="admin-item">
-      <label>Established Date</label>
-      <input id="editDate" class="input" type="text">
-    </div>
-
-    <div class="admin-item">
-      <label>Change Logo</label>
-      <input id="logoUpload"
-             class="input"
-             type="file"
-             accept="image/*"
-             onchange="changeLogo(event)">
-    </div>
-
-    <div id="adminLinks"></div>
-
-    <button class="gold-btn" onclick="saveAdminChanges()">
-      💾 SAVE ALL CHANGES
-    </button>
-
-    <button class="gold-btn danger" onclick="adminLogout()">
-      LOGOUT
-    </button>
-
-  </div>
+<div
+id="verified"
+class="verified"
+>
+✅ মোবাইল নম্বর ভেরিফাই হয়েছে
 </div>
 
-<!-- MENU -->
-<div class="modal" id="menuModal">
-
-  <div class="modal-box">
-
-    <div class="modal-head">
-      <h2>☰ Menu</h2>
-      <button class="close" onclick="closeModal('menuModal')">×</button>
-    </div>
-
-    <button class="gold-btn" onclick="shareSite()">
-      📤 Share Website
-    </button>
-
-    <button class="gold-btn"
-            style="margin-top:12px"
-            onclick="openAdmin()">
-      🔐 Admin Panel
-    </button>
-
-  </div>
 </div>
 
-<div class="toast" id="toast"></div>
+
+<button
+type="submit"
+>
+🚀 রেজিস্ট্রেশন সম্পন্ন করুন
+</button>
+
+</form>
+
+
+<div
+class="switch"
+onclick="showLogin()"
+>
+আগে সদস্য হয়েছেন?
+<strong> Login করুন</strong>
+</div>
+
+</section>
+
+
+<!-- ================= LOGIN ================= -->
+
+<section
+id="loginPage"
+class="card hidden"
+>
+
+<h2>
+🔐 সদস্য Login
+</h2>
+
+<form id="loginForm">
+
+<input
+id="loginMobile"
+type="tel"
+placeholder="মোবাইল নম্বর"
+required
+>
+
+<br><br>
+
+<input
+id="loginPassword"
+type="password"
+placeholder="পাসওয়ার্ড"
+required
+>
+
+<button type="submit">
+🔓 Login করুন
+</button>
+
+</form>
+
+<div
+class="switch"
+onclick="showRegister()"
+>
+নতুন সদস্য?
+<strong> Registration করুন</strong>
+</div>
+
+</section>
+
+
+<!-- ================= MEMBER AREA ================= -->
+
+<section
+id="memberArea"
+class="hidden"
+>
+
+
+<div class="dashboard">
+
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<div class="side-title">
+🤝 সদস্য মেনু
+</div>
+
+<button
+class="side-btn active"
+onclick="showSection('home')"
+>
+🏠 হোম
+</button>
+
+<button
+class="side-btn"
+onclick="showSection('profile')"
+>
+👤 আমার প্রোফাইল
+</button>
+
+<button
+class="side-btn"
+onclick="showSection('links')"
+>
+🌐 অনলাইন লিংক
+</button>
+
+<button
+class="side-btn"
+onclick="showSection('videos')"
+>
+🎬 YouTube ভিডিও
+</button>
+
+<button
+class="side-btn"
+onclick="showSection('notice')"
+>
+📢 নোটিশ
+</button>
+
+<button
+class="side-btn"
+onclick="showSection('contact')"
+>
+📞 যোগাযোগ
+</button>
+
+<button
+class="side-btn logout"
+onclick="logout()"
+>
+🚪 Logout
+</button>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main>
+
+
+<!-- HOME -->
+
+<div
+id="home"
+class="dashboard-section"
+>
+
+<div class="card">
+
+<div class="welcome">
+
+<div>
+
+<h2 style="text-align:left">
+👋 স্বাগতম,
+<span id="memberName"></span>
+</h2>
+
+<span class="badge">
+✓ সক্রিয় সদস্য
+</span>
+
+</div>
+
+<div class="member-photo">
+👤
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+⚡ আমাদের অনলাইন প্ল্যাটফর্ম
+</h2>
+
+<div class="social-grid">
+
+
+<a
+class="social"
+href="https://www.facebook.com/share/1DPBjB3ePJ/"
+target="_blank"
+>
+<div class="social-icon facebook">f</div>
+<b>Facebook Page</b>
+</a>
+
+
+<a
+class="social"
+href="https://www.youtube.com/@Bangladeshprobashifundclubf"
+target="_blank"
+>
+<div class="social-icon youtube">▶</div>
+<b>YouTube Channel</b>
+</a>
+
+
+<a
+class="social"
+href="https://chat.whatsapp.com/D09urUItfkdEjiVtqgIbY7?s=cl&p=a&ilr=4"
+target="_blank"
+>
+<div class="social-icon whatsapp">☎</div>
+<b>WhatsApp Group</b>
+</a>
+
+
+<a
+class="social"
+href="https://m.me/j/AbazuYGAWNXaKYj3/?send_source=gc%3Acopy_invite_link_c"
+target="_blank"
+>
+<div class="social-icon messenger">⚡</div>
+<b>Messenger Group</b>
+</a>
+
+
+<a
+class="social"
+href="https://s.imoim.net/nLU12X"
+target="_blank"
+>
+<div class="social-icon imo">i</div>
+<b>IMO Group</b>
+</a>
+
+
+<a
+class="social"
+href="https://wa.me/qr/5SBSJ55KMO7CB1"
+target="_blank"
+>
+<div class="social-icon whatsapp">☎</div>
+<b>WhatsApp Contact</b>
+</a>
+
+
+<a
+class="social"
+href="https://wa.me/message/6ZU4EZJFBGAFM1"
+target="_blank"
+>
+<div class="social-icon whatsapp">💬</div>
+<b>WhatsApp Message</b>
+</a>
+
+
+<a
+class="social"
+href="https://www.tiktok.com/"
+target="_blank"
+>
+<div class="social-icon tiktok">♪</div>
+<b>TikTok</b>
+</a>
+
+
+<a
+class="social"
+href="https://www.expatservicesmy.com/ESKLPublicportal/Appointment/BookAppointment"
+target="_blank"
+>
+<div class="social-icon eskl">🌐</div>
+<b>ESKL</b>
+</a>
+
+
+<a
+class="social"
+href="https://chat.whatsapp.com/HcEMStEP3un4uYDBBfH5b0?s=cl&p=a&ilr=4"
+target="_blank"
+>
+<div class="social-icon driver">🚗</div>
+<b>Driver Group</b>
+</a>
+
+
+<a
+class="social"
+href="https://chat.whatsapp.com/Jl7W0RXQjEI7Mhgj5riBhu?s=qt&p=a&ilr=0"
+target="_blank"
+>
+<div class="social-icon walker">🚶</div>
+<b>Walker Group</b>
+</a>
+
+
+<a
+class="social"
+href="#"
+onclick="apkAlert()"
+>
+<div class="social-icon apk">📲</div>
+<b>Member APK</b>
+</a>
+
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+🎬 আমাদের YouTube ভিডিও
+</h2>
+
+<div class="video-grid">
+
+
+<a
+class="video"
+href="https://youtu.be/DXB7gdJUlMw?si=IxsVw1rgzQEGmI-j"
+target="_blank"
+>
+
+<div class="video-icon">
+▶️
+</div>
+
+<b>
+ভিডিও ০১
+</b>
+
+<p>
+ভিডিও দেখতে ক্লিক করুন
+</p>
+
+</a>
+
+
+<a
+class="video"
+href="https://youtu.be/I2mc2RXCEIA?si=f_NPlgC-n0RFVkyq"
+target="_blank"
+>
+
+<div class="video-icon">
+▶️
+</div>
+
+<b>
+ভিডিও ০২
+</b>
+
+<p>
+ভিডিও দেখতে ক্লিক করুন
+</p>
+
+</a>
+
+
+<a
+class="video"
+href="https://youtu.be/KumLOhgtgsM?si=gdZm9oyZQiC2g-N0"
+target="_blank"
+>
+
+<div class="video-icon">
+▶️
+</div>
+
+<b>
+ভিডিও ০৩
+</b>
+
+<p>
+ভিডিও দেখতে ক্লিক করুন
+</p>
+
+</a>
+
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- PROFILE -->
+
+<div
+id="profile"
+class="dashboard-section hidden"
+>
+
+<div class="card">
+
+<h2>
+👤 আমার সদস্য প্রোফাইল
+</h2>
+
+<div class="profile-grid">
+
+<div class="info">
+<span>ফার্স্ট নাম</span>
+<b id="pFirst"></b>
+</div>
+
+<div class="info">
+<span>লাষ্ট নাম</span>
+<b id="pLast"></b>
+</div>
+
+<div class="info">
+<span>বাবার নাম</span>
+<b id="pFather"></b>
+</div>
+
+<div class="info">
+<span>মায়ের নাম</span>
+<b id="pMother"></b>
+</div>
+
+<div class="info">
+<span>মোবাইল</span>
+<b id="pMobile"></b>
+</div>
+
+<div class="info">
+<span>গ্রাম</span>
+<b id="pVillage"></b>
+</div>
+
+<div class="info">
+<span>জেলা</span>
+<b id="pDistrict"></b>
+</div>
+
+<div class="info">
+<span>পোস্ট অফিস</span>
+<b id="pPost"></b>
+</div>
+
+<div class="info">
+<span>TikTok</span>
+<b id="pTikTok">দেওয়া হয়নি</b>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- LINKS -->
+
+<div
+id="links"
+class="dashboard-section hidden"
+>
+
+<div class="card">
+
+<h2>
+🌐 সকল অনলাইন লিংক
+</h2>
+
+<p style="text-align:center">
+উপরের হোম পেজের মতো এখান থেকেও সব প্ল্যাটফর্ম ব্যবহার করা যাবে।
+</p>
+
+</div>
+
+</div>
+
+
+<!-- VIDEOS -->
+
+<div
+id="videos"
+class="dashboard-section hidden"
+>
+
+<div class="card">
+
+<h2>
+🎬 YouTube ভিডিও
+</h2>
+
+<div class="video-grid">
+
+<a
+class="video"
+href="https://youtu.be/DXB7gdJUlMw?si=IxsVw1rgzQEGmI-j"
+target="_blank"
+>
+<div class="video-icon">▶️</div>
+<b>ভিডিও ০১</b>
+</a>
+
+<a
+class="video"
+href="https://youtu.be/I2mc2RXCEIA?si=f_NPlgC-n0RFVkyq"
+target="_blank"
+>
+<div class="video-icon">▶️</div>
+<b>ভিডিও ০২</b>
+</a>
+
+<a
+class="video"
+href="https://youtu.be/KumLOhgtgsM?si=gdZm9oyZQiC2g-N0"
+target="_blank"
+>
+<div class="video-icon">▶️</div>
+<b>ভিডিও ০৩</b>
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- NOTICE -->
+
+<div
+id="notice"
+class="dashboard-section hidden"
+>
+
+<div class="card">
+
+<h2>
+📢 নোটিশ বোর্ড
+</h2>
+
+<div class="notice">
+🔔 নতুন সদস্যদের স্বাগতম।
+</div>
+
+<div class="notice">
+📢 সংগঠনের সকল সদস্যকে নিয়মিত যোগাযোগ রাখার অনুরোধ করা হচ্ছে।
+</div>
+
+<div class="notice">
+🤝 ঐক্য ও সহযোগিতার মাধ্যমে সংগঠনকে এগিয়ে নিয়ে যাই।
+</div>
+
+</div>
+
+</div>
+
+
+<!-- CONTACT -->
+
+<div
+id="contact"
+class="dashboard-section hidden"
+>
+
+<div class="card">
+
+<h2>
+📞 যোগাযোগ
+</h2>
+
+<div class="notice">
+📱 WhatsApp Contact ব্যবহার করতে Online Platform থেকে WhatsApp Contact নির্বাচন করুন।
+</div>
+
+<div class="notice">
+💬 WhatsApp Message ব্যবহার করে সরাসরি মেসেজ পাঠাতে পারবেন।
+</div>
+
+</div>
+
+</div>
+
+
+</main>
+
+</div>
+
+</section>
+
+
+<footer>
+
+© 2026
+<br>
+<strong>
+প্রবাসী ও যুব কল্যাণ সমবায় সমিতি
+</strong>
+
+<br><br>
+
+ঐক্য • সহযোগিতা • কল্যাণ • উন্নয়ন
+
+</footer>
+
+</div>
+
 
 <script>
-/* =====================================================
-   ADMIN LOGIN
-   ===================================================== */
 
-const ADMIN_USERNAME = "MDRAFIK1987";
-const ADMIN_PASSWORD = "BPM@2026!";
+/* =====================================
+   REGISTRATION
+===================================== */
 
-/* =====================================================
-   DEFAULT DATA
-   ===================================================== */
+let mobileVerified=false;
 
-const defaultData = {
 
-  bn: "প্রবাসী ও যুব কল্যাণ সমবায় সমিতি",
+function verifyMobile(){
 
-  en: "PROBASHI & YOUTH WELFARE COOPERATIVE SOCIETY",
+const mobile=
+document.getElementById("mobile").value.trim();
 
-  location: "কলারাপুর মালয়েশিয়া",
+if(mobile.length<8){
 
-  date: "01.01.2026",
+alert("❌ আগে সঠিক মোবাইল নম্বর লিখুন।");
 
-  logo: "",
+return;
 
-  features: [
+}
 
-    {
-      name:"Facebook Page",
-      icon:"f",
-      color:"blue",
-      url:"https://www.facebook.com/"
-    },
+/*
+ডেমো Verification।
+আসল SMS OTP Verification-এর জন্য
+Firebase/SMS service পরে যুক্ত করতে হবে।
+*/
 
-    {
-      name:"YouTube",
-      icon:"▶",
-      color:"red",
-      url:"https://youtube.com/"
-    },
+mobileVerified=true;
 
-    {
-      name:"TikTok",
-      icon:"♪",
-      color:"gray",
-      url:"https://www.tiktok.com/"
-    },
+document
+.getElementById("verified")
+.style.display="block";
 
-    {
-      name:"Facebook Group",
-      icon:"f",
-      color:"blue",
-      url:"https://www.facebook.com/"
-    },
+}
 
-    {
-      name:"WhatsApp Group",
-      icon:"◉",
-      color:"green",
-      url:"https://chat.whatsapp.com/E9qoK3d1TkV5F6hAapJTZ7"
-    },
 
-    {
-      name:"WhatsApp Channel",
-      icon:"◔",
-      color:"green",
-      url:"https://whatsapp.com/channel/0029VbCDjt4AO7RBkV1kZg3s"
-    },
+/* =====================================
+   REGISTER
+===================================== */
 
-    {
-      name:"WhatsApp Contact",
-      icon:"☎",
-      color:"green",
-      url:"https://wa.me/qr/7ZZMIOTFMIX5G1"
-    },
+document
+.getElementById("registerForm")
+.addEventListener(
+"submit",
+function(e){
 
-    {
-      name:"Appointment",
-      icon:"□",
-      color:"blue",
-      url:"#"
-    },
+e.preventDefault();
 
-    {
-      name:"eVerify",
-      icon:"✓",
-      color:"blue",
-      url:"#"
-    },
 
-    {
-      name:"News & Notice",
-      icon:"▤",
-      color:"purple",
-      url:"#"
-    },
+if(!mobileVerified){
 
-    {
-      name:"Donation",
-      icon:"♥",
-      color:"orange",
-      url:"#"
-    },
+alert(
+"❌ আগে মোবাইল নম্বর ভেরিফাই করুন।"
+);
 
-    {
-      name:"Location",
-      icon:"●",
-      color:"cyan",
-      url:"#"
-    },
+return;
 
-    {
-      name:"Contact & Support",
-      icon:"☎",
-      color:"blue",
-      url:"https://wa.me/qr/5SBSJ55KMO7CB1"
-    }
+}
 
-  ]
+
+const password=
+document.getElementById("password").value;
+
+const confirm=
+document.getElementById("confirmPassword").value;
+
+
+if(password!==confirm){
+
+alert(
+"❌ পাসওয়ার্ড এবং কনফার্ম পাসওয়ার্ড একই নয়।"
+);
+
+return;
+
+}
+
+
+const member={
+
+firstName:
+document.getElementById("firstName").value.trim(),
+
+lastName:
+document.getElementById("lastName").value.trim(),
+
+fatherName:
+document.getElementById("fatherName").value.trim(),
+
+motherName:
+document.getElementById("motherName").value.trim(),
+
+mobile:
+document.getElementById("mobile").value.trim(),
+
+village:
+document.getElementById("village").value.trim(),
+
+district:
+document.getElementById("district").value.trim(),
+
+postOffice:
+document.getElementById("postOffice").value.trim(),
+
+password:password,
+
+tiktok:
+document.getElementById("tiktok").value.trim()
+
 };
 
 
-/* =====================================================
-   LOAD DATA
-   ===================================================== */
+localStorage.setItem(
+"memberData",
+JSON.stringify(member)
+);
 
-let data;
+localStorage.setItem(
+"memberLoggedIn",
+"yes"
+);
 
-try{
 
-  const saved = localStorage.getItem("BPM_FINAL_DATA");
+alert(
+"✅ রেজিস্ট্রেশন সফল হয়েছে!"
+);
 
-  if(saved){
-    data = JSON.parse(saved);
-  }else{
-    data = JSON.parse(JSON.stringify(defaultData));
-  }
-
-}catch(e){
-
-  data = JSON.parse(JSON.stringify(defaultData));
-
-}
-
-
-/* =====================================================
-   LOGO
-   ===================================================== */
-
-function createDefaultLogo(){
-
-  const svg = `
-  <svg xmlns="http://www.w3.org/2000/svg"
-       width="300"
-       height="300"
-       viewBox="0 0 300 300">
-
-    <defs>
-      <radialGradient id="g">
-        <stop offset="0%" stop-color="#fff"/>
-        <stop offset="65%" stop-color="#fff"/>
-        <stop offset="66%" stop-color="#e5c21c"/>
-        <stop offset="100%" stop-color="#c79f00"/>
-      </radialGradient>
-    </defs>
-
-    <circle cx="150" cy="150" r="143"
-            fill="#0b0c0b"
-            stroke="#ffd21a"
-            stroke-width="8"/>
-
-    <circle cx="150" cy="150" r="105"
-            fill="url(#g)"
-            stroke="#d3ad16"
-            stroke-width="5"/>
-
-    <text x="150"
-          y="170"
-          text-anchor="middle"
-          font-size="65"
-          font-family="Arial"
-          font-weight="bold"
-          fill="#176b48">
-      BPM
-    </text>
-
-  </svg>
-  `;
-
-  return "data:image/svg+xml;charset=UTF-8," +
-         encodeURIComponent(svg);
-}
-
-
-/* =====================================================
-   RENDER
-   ===================================================== */
-
-function render(){
-
-  document.getElementById("orgBn").textContent = data.bn;
-
-  document.getElementById("orgEn").textContent = data.en;
-
-  document.getElementById("location").textContent = data.location;
-
-  document.getElementById("date").textContent = data.date;
-
-  document.getElementById("logo").src =
-    data.logo || createDefaultLogo();
-
-
-  const grid =
-    document.getElementById("featureGrid");
-
-  grid.innerHTML = "";
-
-
-  data.features.forEach((item,index)=>{
-
-    const card = document.createElement("a");
-
-    card.className = "card";
-
-    card.href =
-      item.url && item.url !== "#"
-      ? item.url
-      : "javascript:void(0)";
-
-    if(item.url && item.url !== "#"){
-      card.target="_blank";
-      card.rel="noopener noreferrer";
-    }else{
-      card.onclick=()=>{
-        showToast("এই লিংকটি Admin Panel থেকে যোগ করুন");
-      };
-    }
-
-
-    card.innerHTML = `
-
-      <div class="number">
-        ${index+1}
-      </div>
-
-      <div class="icon ${item.color}">
-        ${item.icon}
-      </div>
-
-      <div class="card-title">
-        ${escapeHTML(item.name)}
-      </div>
-
-      <div class="card-arrow">
-        ↗
-      </div>
-    `;
-
-
-    grid.appendChild(card);
-
-  });
-
-}
-
-
-/* =====================================================
-   ESCAPE
-   ===================================================== */
-
-function escapeHTML(str){
-
-  return String(str)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
-
-
-/* =====================================================
-   SHARE
-   ===================================================== */
-
-async function shareSite(){
-
-  const shareData = {
-
-    title:data.en,
-
-    text:
-      "Visit Probashi & Youth Welfare Cooperative Society",
-
-    url:window.location.href
-
-  };
-
-
-  try{
-
-    if(navigator.share){
-
-      await navigator.share(shareData);
-
-    }else{
-
-      await navigator.clipboard.writeText(
-        window.location.href
-      );
-
-      showToast("Website link copied!");
-
-    }
-
-  }catch(e){
-
-    console.log(e);
-
-  }
-
-}
-
-
-/* =====================================================
-   ADMIN OPEN
-   ===================================================== */
-
-function openAdmin(){
-
-  closeModal("menuModal");
-
-  if(sessionStorage.getItem("BPM_ADMIN") === "YES"){
-
-    loadAdminPanel();
-
-    document
-      .getElementById("adminModal")
-      .classList.add("show");
-
-  }else{
-
-    document
-      .getElementById("loginModal")
-      .classList.add("show");
-
-  }
-
-}
-
-
-/* =====================================================
-   LOGIN
-   ===================================================== */
-
-function loginAdmin(){
-
-  const username =
-    document.getElementById("adminUser").value.trim();
-
-  const password =
-    document.getElementById("adminPass").value;
-
-
-  if(
-    username === ADMIN_USERNAME &&
-    password === ADMIN_PASSWORD
-  ){
-
-    sessionStorage.setItem(
-      "BPM_ADMIN",
-      "YES"
-    );
-
-    document.getElementById("loginStatus")
-      .textContent="";
-
-    closeModal("loginModal");
-
-    loadAdminPanel();
-
-    document.getElementById("adminModal")
-      .classList.add("show");
-
-    document.getElementById("adminUser").value="";
-    document.getElementById("adminPass").value="";
-
-  }else{
-
-    document.getElementById("loginStatus")
-      .textContent =
-      "❌ ভুল Username অথবা Password";
-
-  }
-
-}
-
-
-/* =====================================================
-   ADMIN PANEL
-   ===================================================== */
-
-function loadAdminPanel(){
-
-  document.getElementById("editBn").value =
-    data.bn;
-
-  document.getElementById("editEn").value =
-    data.en;
-
-  document.getElementById("editLocation").value =
-    data.location;
-
-  document.getElementById("editDate").value =
-    data.date;
-
-
-  const box =
-    document.getElementById("adminLinks");
-
-  box.innerHTML = "";
-
-
-  data.features.forEach((item,index)=>{
-
-    const div =
-      document.createElement("div");
-
-    div.className="admin-item";
-
-    div.innerHTML=`
-
-      <label>
-        ${index+1}. ${escapeHTML(item.name)}
-      </label>
-
-      <input
-        class="input"
-        id="link_${index}"
-        type="url"
-        placeholder="Paste link here"
-        value="${escapeHTML(item.url)}">
-
-    `;
-
-    box.appendChild(div);
-
-  });
-
-}
-
-
-/* =====================================================
-   SAVE ADMIN CHANGES
-   ===================================================== */
-
-function saveAdminChanges(){
-
-  data.bn =
-    document.getElementById("editBn").value.trim()
-    || defaultData.bn;
-
-  data.en =
-    document.getElementById("editEn").value.trim()
-    || defaultData.en;
-
-  data.location =
-    document.getElementById("editLocation").value.trim()
-    || defaultData.location;
-
-  data.date =
-    document.getElementById("editDate").value.trim()
-    || defaultData.date;
-
-
-  data.features.forEach((item,index)=>{
-
-    const input =
-      document.getElementById("link_"+index);
-
-    if(input){
-
-      item.url =
-        input.value.trim() || "#";
-
-    }
-
-  });
-
-
-  localStorage.setItem(
-    "BPM_FINAL_DATA",
-    JSON.stringify(data)
-  );
-
-
-  render();
-
-  showToast("✅ সব পরিবর্তন Save হয়েছে");
-
-  closeModal("adminModal");
-
-}
-
-
-/* =====================================================
-   LOGO CHANGE
-   ===================================================== */
-
-function changeLogo(event){
-
-  const file =
-    event.target.files[0];
-
-  if(!file)return;
-
-
-  if(!file.type.startsWith("image/")){
-
-    showToast("শুধু Image নির্বাচন করুন");
-
-    return;
-
-  }
-
-
-  const reader =
-    new FileReader();
-
-
-  reader.onload=function(e){
-
-    data.logo =
-      e.target.result;
-
-    document.getElementById("logo").src =
-      data.logo;
-
-    localStorage.setItem(
-      "BPM_FINAL_DATA",
-      JSON.stringify(data)
-    );
-
-    showToast("✅ Logo পরিবর্তন হয়েছে");
-
-  };
-
-
-  reader.readAsDataURL(file);
-
-}
-
-
-/* =====================================================
-   LOGOUT
-   ===================================================== */
-
-function adminLogout(){
-
-  sessionStorage.removeItem("BPM_ADMIN");
-
-  closeModal("adminModal");
-
-  showToast("Admin Logout হয়েছে");
-
-}
-
-
-/* =====================================================
-   MODAL
-   ===================================================== */
-
-function closeModal(id){
-
-  document
-    .getElementById(id)
-    .classList.remove("show");
-
-}
-
-
-function showMenu(){
-
-  document
-    .getElementById("menuModal")
-    .classList.add("show");
-
-}
-
-
-/* =====================================================
-   TOAST
-   ===================================================== */
-
-let toastTimer;
-
-function showToast(message){
-
-  const toast =
-    document.getElementById("toast");
-
-  toast.textContent=message;
-
-  toast.classList.add("show");
-
-  clearTimeout(toastTimer);
-
-  toastTimer=setTimeout(()=>{
-
-    toast.classList.remove("show");
-
-  },2500);
-
-}
-
-
-/* =====================================================
-   HOME
-   ===================================================== */
-
-function scrollHome(){
-
-  window.scrollTo({
-    top:0,
-    behavior:"smooth"
-  });
-
-}
-
-
-/* =====================================================
-   CLOSE MODAL BY BACKGROUND
-   ===================================================== */
-
-document.querySelectorAll(".modal")
-.forEach(modal=>{
-
-  modal.addEventListener("click",function(e){
-
-    if(e.target === modal){
-
-      modal.classList.remove("show");
-
-    }
-
-  });
+openMember();
 
 });
 
 
-/* =====================================================
-   START
-   ===================================================== */
+/* =====================================
+   LOGIN
+===================================== */
 
-render();
+document
+.getElementById("loginForm")
+.addEventListener(
+"submit",
+function(e){
+
+e.preventDefault();
+
+
+const saved=
+localStorage.getItem("memberData");
+
+
+if(!saved){
+
+alert(
+"❌ কোনো সদস্য পাওয়া যায়নি। আগে Registration করুন।"
+);
+
+return;
+
+}
+
+
+const member=
+JSON.parse(saved);
+
+
+const mobile=
+document.getElementById("loginMobile").value.trim();
+
+const password=
+document.getElementById("loginPassword").value;
+
+
+if(
+mobile===member.mobile &&
+password===member.password
+){
+
+localStorage.setItem(
+"memberLoggedIn",
+"yes"
+);
+
+openMember();
+
+}else{
+
+alert(
+"❌ মোবাইল নম্বর অথবা পাসওয়ার্ড ভুল।"
+);
+
+}
+
+});
+
+
+/* =====================================
+   OPEN MEMBER
+===================================== */
+
+function openMember(){
+
+const saved=
+localStorage.getItem("memberData");
+
+
+if(!saved)return;
+
+
+const member=
+JSON.parse(saved);
+
+
+document
+.getElementById("registerPage")
+.classList.add("hidden");
+
+document
+.getElementById("loginPage")
+.classList.add("hidden");
+
+document
+.getElementById("memberArea")
+.classList.remove("hidden");
+
+
+document
+.getElementById("memberName")
+.innerText=
+member.firstName+
+" "+
+member.lastName;
+
+
+document.getElementById("pFirst")
+.innerText=member.firstName;
+
+document.getElementById("pLast")
+.innerText=member.lastName;
+
+document.getElementById("pFather")
+.innerText=member.fatherName;
+
+document.getElementById("pMother")
+.innerText=member.motherName;
+
+document.getElementById("pMobile")
+.innerText=member.mobile;
+
+document.getElementById("pVillage")
+.innerText=member.village;
+
+document.getElementById("pDistrict")
+.innerText=member.district;
+
+document.getElementById("pPost")
+.innerText=member.postOffice;
+
+document.getElementById("pTikTok")
+.innerText=
+member.tiktok || "দেওয়া হয়নি";
+
+}
+
+
+/* =====================================
+   SHOW LOGIN
+===================================== */
+
+function showLogin(){
+
+document
+.getElementById("registerPage")
+.classList.add("hidden");
+
+document
+.getElementById("loginPage")
+.classList.remove("hidden");
+
+}
+
+
+/* =====================================
+   SHOW REGISTER
+===================================== */
+
+function showRegister(){
+
+document
+.getElementById("loginPage")
+.classList.add("hidden");
+
+document
+.getElementById("registerPage")
+.classList.remove("hidden");
+
+}
+
+
+/* =====================================
+   SIDEBAR SECTION
+===================================== */
+
+function showSection(id){
+
+const sections=
+document.querySelectorAll(
+".dashboard-section"
+);
+
+sections.forEach(
+section=>{
+section.classList.add("hidden");
+}
+);
+
+
+document
+.getElementById(id)
+.classList.remove("hidden");
+
+
+const buttons=
+document.querySelectorAll(
+".side-btn"
+);
+
+buttons.forEach(
+button=>{
+button.classList.remove("active");
+}
+);
+
+}
+
+
+/* =====================================
+   LOGOUT
+===================================== */
+
+function logout(){
+
+localStorage.setItem(
+"memberLoggedIn",
+"no"
+);
+
+document
+.getElementById("memberArea")
+.classList.add("hidden");
+
+showLogin();
+
+}
+
+
+/* =====================================
+   APK
+===================================== */
+
+function apkAlert(){
+
+alert(
+"📲 Member APK-এর আসল Download Link পরে এখানে বসানো হবে।"
+);
+
+}
+
+
+/* =====================================
+   AUTO LOGIN
+===================================== */
+
+window.addEventListener(
+"load",
+function(){
+
+const logged=
+localStorage.getItem("memberLoggedIn");
+
+const member=
+localStorage.getItem("memberData");
+
+
+if(
+logged==="yes" &&
+member
+){
+
+openMember();
+
+}
+
+});
 
 </script>
 
